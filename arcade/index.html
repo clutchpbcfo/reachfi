@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSERT COIN — Free Skill Arcade</title>
+<meta name="description" content="INSERT COIN is the free skill arcade by The Clutch Foundation. One-tap games, verified high scores, no ads, no accounts. STAK, PULSE, FUSE, NERVE, PRISM and more.">
+<link rel="canonical" href="https://reachfi.network/arcade/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="REACHFI NETWORK">
+<meta property="og:title" content="INSERT COIN — Free Skill Arcade">
+<meta property="og:description" content="Free skill games with verified high scores. No ads, no accounts. Pick a cabinet.">
+<meta property="og:url" content="https://reachfi.network/arcade/">
+<meta property="og:image" content="https://clutchpbcfo.github.io/arcade-shell/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ClutchPBCFO">
+<link rel="icon" href="https://clutchpbcfo.github.io/arcade-shell/icon-192.png">
+<link rel="apple-touch-icon" href="https://clutchpbcfo.github.io/arcade-shell/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080F;--bg2:#0E0E1A;--panel:#141426;--line:#23233F;--ink:#F3F3FB;--mut:#8C8CB0;--brand:#8B6CFF;--pink:#FF3D81;--gold:#FFC83D;--green:#37D58C}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+::selection{background:var(--brand);color:#0c0618}
+h1,h2,h3{font-family:'Exo 2',Inter,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 6%}
+a{color:var(--brand);text-decoration:none}
+img{max-width:100%}
+nav{position:sticky;top:0;z-index:50;background:rgba(8,8,15,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.navmark{height:30px;display:block}
+.navright{display:flex;gap:20px;align-items:center;font-size:.82rem;font-weight:600;letter-spacing:.08em}
+.navright a{color:var(--mut)} .navright a:hover{color:var(--ink)}
+header{position:relative;text-align:center;padding:88px 0 56px}
+.halo{position:absolute;inset:auto 0 auto 50%;top:-160px;width:1000px;height:1000px;transform:translateX(-50%);background:radial-gradient(circle,rgba(139,108,255,.18),rgba(255,61,129,.06) 45%,transparent 65%);pointer-events:none;filter:blur(8px)}
+.coinmark{height:84px;margin:0 auto 26px;display:block;filter:drop-shadow(0 0 30px rgba(139,108,255,.5))}
+h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:900;letter-spacing:.02em}
+.sub{max-width:600px;margin:16px auto 0;color:var(--mut);font-size:1.08rem}
+.badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.badge{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:8px 18px;font-family:'Exo 2';font-weight:700;font-size:.72rem;letter-spacing:.18em;color:var(--mut)}
+section{padding:64px 0}
+.kicker{font-family:'Exo 2';font-weight:800;font-size:.75rem;letter-spacing:.35em;color:var(--brand);text-transform:uppercase;margin-bottom:12px;text-align:center}
+.cabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;margin-top:38px}
+.cab{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:26px 18px;text-align:center;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative}
+.cab:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(0,0,0,.5)}
+.cab img{width:96px;height:96px;border-radius:20px;display:block;margin:0 auto 14px;box-shadow:0 10px 28px rgba(0,0,0,.55)}
+.cab b{font-family:'Exo 2';letter-spacing:.14em;font-size:1.05rem;color:var(--ink);display:block}
+.cab .tag{font-size:.66rem;color:var(--mut);letter-spacing:.12em;display:block;margin-top:4px}
+.cab .line{font-size:.82rem;color:var(--mut);margin-top:10px}
+.cab .live{font-size:.64rem;letter-spacing:.12em;color:var(--green);display:block;margin-top:8px;font-weight:700}
+.door{margin-top:54px;text-align:center;border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:44px 24px}
+.door h2{font-size:clamp(1.4rem,3.4vw,2rem);font-weight:900}
+.door p{color:var(--mut);max-width:520px;margin:10px auto 24px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:'Exo 2';font-weight:800;letter-spacing:.12em;border-radius:14px;padding:15px 30px;font-size:.95rem;background:linear-gradient(180deg,#a78fff,var(--brand));color:#0c0618;box-shadow:0 0 30px rgba(139,108,255,.4);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(139,108,255,.55)}
+footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--mut);font-size:.78rem;letter-spacing:.08em}
+footer a{color:var(--mut)} footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a href="#top"><img class="navmark" src="https://clutchpbcfo.github.io/arcade-shell/wordmark.png" alt="INSERT COIN"></a>
+  <div class="navright">
+    <a href="https://reachfi.network/">REACHFI</a>
+    <a href="https://x.com/ClutchPBCFO" rel="noopener">@CLUTCHPBCFO</a>
+  </div>
+</div></nav>
+
+<header id="top">
+  <div class="halo"></div>
+  <div class="wrap">
+    <img class="coinmark" src="https://clutchpbcfo.github.io/arcade-shell/wordmark.png" alt="INSERT COIN">
+    <h1>The free skill arcade</h1>
+    <p class="sub">One-tap games built on pure skill. Every score on every board is verified by a server replay. No ads, no accounts, no nonsense.</p>
+    <div class="badges">
+      <span class="badge">FREE</span>
+      <span class="badge">VERIFIED HIGH SCORES</span>
+      <span class="badge">NO ADS</span>
+      <span class="badge">A CLUTCH FOUNDATION OPERATION</span>
+    </div>
+  </div>
+</header>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker">Pick a cabinet</div>
+    <div class="cabs">
+      <a class="cab" style="border-color:rgba(55,213,140,.45)" href="https://stakit.app">
+        <img src="data:image/webp;base64,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" alt="STAK">
+        <b>STAK</b><span class="tag">STACK · iOS</span>
+        <span class="line">One tap. Stack high. Nail the center.</span>
+        <span class="live">ON THE APP STORE</span>
+      </a>
+      <a class="cab" style="border-color:rgba(0,229,255,.45)" href="https://reachfi.network/pulse/">
+        <img src="data:image/webp;base64,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" alt="PULSE">
+        <b>PULSE</b><span class="tag">REFLEX</span>
+        <span class="line">One tap. Perfect. Chain the combo.</span>
+      </a>
+      <a class="cab" style="border-color:rgba(255,138,30,.45)" href="https://reachfi.network/fuse/">
+        <img src="data:image/webp;base64,UklGRh4FAABXRUJQVlA4WAoAAAAQAAAAdwAAdwAAQUxQSIMBAAABkGNb27FnV+wZ2OnSWa1ts0ptDcDGEJxUTqnftm1Wn3HHeb+s56oTERMALZ2iagfXX/4yigKNv16uD9RGOuEyuqYO3vkviv1/ZyDV1VFeVTfMomTL9Sovh5Q8EIU/LNEueEkUP+evUf57Uf7rLE1arULQ0noxp2Eh2X+hIaE5dIE+IdpzrnwrE2v+OcK/CNXP4WetCtnVM4qFbvEpng/5PPA8US6ESwE4HzDadQaSLYzMicCAUB6A2zNOz9xidJx0Mc1CunmC1cQOq503rF79ZfXXysokV/6/ereZlfkvq7+vWL3aYbUzyWqihVVLrJGTMdbrDaeXnpjgNAGkWhhZ0gCX64yuuwAoZ1QKAJ73+dzzOIFCPoU4fYnNPM4M+czlfeBZyLcyMWfivJ1MOnD+YR7DuKDzOItRp4sAPRx6oGXlV/V9rYS20WuqW4+G1k7Vj1X2sMoJDvSquq6q61VecLBr+uxHvWr0H6bSXXEZ/WKbBtZf/jKqwPjr5fpgU5wftAQAVlA4IHQDAAAwFQCdASp4AHgAPm00l0gkIyIhJ5ZoqIANiWNuLl88TGh3mV+H8QHgZFusVerjb+87kLZ8g314m0yK5uj/TB6n/4RvMxOGw4XwEf2M2eUOogHDPqIeofdscQle2xHBScpYAnKC3foHZMYgyv8d6Mt9+MvXwEh09LhdwNt29CC+GWLJCvszeBVujTSI/W2vxPWXLCHkdDpIuEABPgpEqa9cifBQKE63IJZu+sy+8s7UHdiAAP78EvLd36LRDatySK6wgJfLbHpxtOIjShhP3rLR+eOtIC7iJ/X22s/FR/WpGgsElJu3SOL5LwQGEZoaqe+4pyY+xe6M2/qvnrH2paXOF+yZDz6Cf+l0zYyu93HRD+XZv61+ZgA30qSTClnC5wNLX/j1ZdJXUr9nDVTgo8FF8zA4ftjJHSC7dw/ZlnJ23jGy4AKWjTdMypxxg4miKSHXt51YSNZcK7Iz3jKQPt3QTKy9wO0AxvlUrdjHgdC1IWARU43SkRRGAerRZFV9M5OuxB9FoJ88JrFPaOaKcWyWtG5loQJiITpR3E/8nCynTuYvAmMttZeeJ+zRIZrWCt7vuyrT8siQVuaLwWBiO7HiQiEP/y6ED1JuvWS+9HAF06psmo9SBtG95/03QHiZyr9d4Mov0IOmIwy9MkoxoOZk9b/kxYM3u2ebv8ftXZW3gVfup7GZoNQyf6lxlnR4ePE6m7IFXkFxwjedjX6/eUhf8Pkj5X2mNsTUtUE8bsUJWya1D3yFKZV5ekaKD9MzCwhgn9AIaN3B8ojzhEvW9ZnCSkJXbyfI+hGnhvWQY7LiGDj3NwQ1hmUmhdQ1cD772qpdOkJYeOljEgEZtOorex2kt6VfWyhAGzCEWNqPGwZl28PdBPaSq4fVNWq+WM7C5r1Ad7lpgmpW8+VTvP28YWCc1vJwvwtVdC4iRwjTGt8Lhh8Ibm+3llofVO99qkD750kENn8VeebmQNoMWQWBmGBwZYF+OZwqZstfUWVvPiLT9eSixv7Cu8ImQri5bATNcZA2EznLI+mIM/uMjOxs/VeOpkLlNPzBM/QXzy+/KOwqlZPbLhLiemCavxMBGWYw2RlIeYOFyQw0MjBweixfDsKRwOwGjgMXPPPCC+rvLotlxGZo/r8z/ZAy+QK+7ZQeDEAVS+3xyTRwKEh5AA8TBp1iZoAAAA==" alt="FUSE">
+        <b>FUSE</b><span class="tag">GREED · TIMING</span>
+        <span class="line">Cut it close. The bomb ends the argument.</span>
+      </a>
+      <a class="cab" style="border-color:rgba(255,200,61,.45)" href="https://clutchpbcfo.github.io/nerve/">
+        <img src="data:image/webp;base64,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" alt="NERVE">
+        <b>NERVE</b><span class="tag">SIGNATURE</span>
+        <span class="line">Hold steady. The daily board is one seed.</span>
+      </a>
+      <a class="cab" style="border-color:rgba(234,248,255,.45)" href="https://clutchpbcfo.github.io/prism/">
+        <img src="data:image/webp;base64,UklGRhIFAABXRUJQVlA4WAoAAAAQAAAAdwAAdwAAQUxQSHkAAAANgGrbtupmh5kTy8zMFi25fAF6Kqhq/t9aXLaJiAnQF5rTtXIxF/E4xJperD8F3NjWRJy+Twt5uxFy5EXMxWcxjx7E3DyLOf0kZtuHoE+CroypHgU9jFAdBV1KUM0FbVhTpS1UPVF3sLJYUSw/VgDLgXXz/83//5kHAFZQOCByBAAAEBkAnQEqeAB4AD5tMJVHpCKiISgYCgCADYllANbQ8mJEXGvz6gPyrvEf2A9QHn/+jP/YelB1AG8u+UZeBuMfoD9FyUbh/r4HZvVYzb0M5zasqaf5amdkPsUvi/sobmWEo+kLBasZjwn7o5M7m/kgsYeeVz8aUcR/cGztLOIhX613ET2SnUHeLGyazNY6tekXEL7CKaWVezoRqatrL2RgWHqlqP8hIVehWW9349/qvb+bweLM24bdnsWrpPKT3ht8kO0CIfvYzD7FL5PzMkZJrwAA/vyGOnkPE6XI0U/yxyCiFGyXWq/pdOX204Q3T9U9sgtXAFbbJz6wAB2JanN7vFuxFQ3AAddomhWa82DIyESDzqnLyexrm+loDetamETIG9zFrVOo1YimSluWo/P2mxJAUIbTCGESg2rcue+MR5SIoMooQKxfIGR+si9ssY5ZldwulrVVp/orFmXYVonvFJaCC0WUQEYGNCDr6z2g7AyvzJ2+NNIoE0ziOP5f3+1WGp1fXS2x/X/z9X/LXcJoWMPQRkZLqiT9Kf2N1OIA3BiAwhRVqLsc6ci/88deVTL1zO8egeZvkxQcO/9PsryEL0Wo9ALAJEkIDApR0VO6FppaSv9Ylg20mCf5kqEur+1GE4MrU+3q84RSRuP72MuBVeLxSD7dnvVMKYXXZ0P73u7J+wMBjnftRYKmEmBbDcOzmFiteEQRIPf0YRhVSuPlLaKjddmfQSwuNtf0qpKrcn3YFOIV7aiC4l8ByH65JBmUDRAuPKf9/dv59lMIR/28ry0YzjyAPEsdNLaeY/NiqkagBFi8URK2/GyqSvLCgbp3zKUWsUFJB8SSKihFAw5Kw3Y8eZy3PYhb8snp1dIZhpXp9+FK2iyXIf9lB+/EWpWk3v013D0XnBvflClltuTERzsj9zMFTsJicpMk2InUTNadPJs8Zs2AeYfTPVQOGZ4A7VWtevNnGb3T1M5mZHXRxqKmkpnc9gI0B4Iy2CctmfHKceSf8F6/1uWolbJRlLN2dNurQ4Dh10o3q+G0atn9TFZcT46CASBt2Na4gD0w7QxLOr3nZ7gdWS9+3HfGemLFoLb/OOsmRwSwYj3UySViweXr6Nry7q9KUWoXBtDH2j7jbMDZTgpPYmglg63IW/dI8v0Ofg9gExRbemirTN6X3ODl4RvPS9JgMDqb+JafiHvGSNf+ZQ87qlm+rbrvjtey+6P5SLURoT4skubgmQvHoSK2EUPOgb0dOPJnvmovgi92msHw/hhJzQprY5NZYLwxDoj+zWUfJFYvE4I9VcNdPauXaWUBN50tLKxgkHlEpk14Rvl2+HUbdELjd0eG3Vxy6IbBjtuizVleR8nzTCD1VKIAlFe8cm/KtwxFeB4FCbPIcMkrSwJkOtowGKPV5TUEs2ZT9Kbtr++PQQPJSUV455JGw3X/WgKuwa8lXnuretkoo6xpkCR0kKF+3KiI6qjodVC9GvKEACBVqwAe7AYq7lk6nz55MAgkF3FAC6eB1gAAAA==" alt="PRISM">
+        <b>PRISM</b><span class="tag">AIM · RICOCHET</span>
+        <span class="line">Bank the shot. Every ricochet doubles it.</span>
+      </a>
+    </div>
+
+    <div class="door">
+      <h2>The full floor</h2>
+      <p>More cabinets are always lighting up. Step inside the main room for everything INSERT COIN runs.</p>
+      <a class="btn" href="https://clutchpbcfo.github.io/arcade-shell/">ENTER THE FLOOR</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    INSERT COIN · A <a href="https://reachfi.network">REACHFI NETWORK</a> OPERATION · A CLUTCH FOUNDATION PROJECT · <a href="https://x.com/ClutchPBCFO" rel="noopener">@CLUTCHPBCFO</a>
+  </div>
+</footer>
+
+</body>
+</html>
