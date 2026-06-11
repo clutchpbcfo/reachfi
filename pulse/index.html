@@ -43,7 +43,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .btn-sm{padding:9px 18px;font-size:.78rem;border-radius:10px}
 header{position:relative;padding:78px 0 36px;text-align:center}
 .halo{position:absolute;inset:auto 0 auto 50%;top:-120px;width:900px;height:900px;transform:translateX(-50%);background:radial-gradient(circle,rgba(0,229,255,.16),rgba(255,77,166,.05) 40%,transparent 65%);pointer-events:none;filter:blur(10px)}
-.mascot{width:min(330px,66vw);filter:drop-shadow(0 24px 60px rgba(0,229,255,.35));animation:float 4.5s ease-in-out infinite}
+.mascot{width:min(330px,66vw);height:auto;filter:drop-shadow(0 24px 60px rgba(0,229,255,.35));animation:float 4.5s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(2deg)}}
 .logo{width:min(440px,80vw);margin:16px auto 4px;display:block}
 .tag{font-family:'Exo 2';font-weight:900;font-size:clamp(1.5rem,4.6vw,2.6rem);letter-spacing:.04em;background:linear-gradient(180deg,#fff,var(--cy));-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -97,7 +97,7 @@ details[open] summary::after{content:"x";font-size:.95rem}
 details p{margin-top:10px;color:var(--mut);font-size:.93rem}
 .final{text-align:center;padding:96px 0}
 .final h2{font-size:clamp(2rem,6vw,3.4rem)}
-.final .mini{width:120px;margin:0 auto 18px;display:block;animation:float 4.5s ease-in-out infinite}
+.final .mini{width:120px;height:auto;margin:0 auto 18px;display:block;animation:float 4.5s ease-in-out infinite}
 footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--mut);font-size:.78rem;letter-spacing:.08em}
 footer a{color:var(--mut)} footer a:hover{color:var(--cy)}
 @media(max-width:760px){.fairbox{grid-template-columns:1fr}.navright .hide-m{display:none}}
@@ -118,7 +118,7 @@ footer a{color:var(--mut)} footer a:hover{color:var(--cy)}
 <header id="top">
   <div class="halo"></div>
   <div class="wrap">
-    <img class="mascot" src="https://clutchpbcfo.github.io/pulse/pulse-mascot.png" alt="The PULSE mascot, a glossy orb with a heartbeat line" width="1824" height="1456">
+    <img class="mascot" src="https://clutchpbcfo.github.io/pulse/pulse-mascot.png" alt="The PULSE mascot, a glossy orb with a heartbeat line">
     <img class="logo" src="https://clutchpbcfo.github.io/pulse/pulse-logo.svg" alt="PULSE">
     <div class="tag">One tap. Perfect.</div>
     <p class="sub">The reflex score-chaser. The ring sweeps and you get one tap to nail dead center. Perfects build combos. Combos multiply your score. Miss once and the run is over.</p>
