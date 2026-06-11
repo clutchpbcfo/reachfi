@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — One Tap. Perfect.</title>
+<meta name="description" content="PULSE is the one-tap reflex score-chaser. Tap dead-center, chain Perfects, climb a global leaderboard that replays every run server-side. Free on the INSERT COIN arcade.">
+<link rel="canonical" href="https://reachfi.network/pulse/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="REACHFI NETWORK">
+<meta property="og:title" content="PULSE — One Tap. Perfect.">
+<meta property="og:description" content="The reflex score-chaser. One tap. Dead center. Chain Perfects or watch the combo die. Free — provably fair leaderboards.">
+<meta property="og:url" content="https://reachfi.network/pulse/">
+<meta property="og:image" content="https://clutchpbcfo.github.io/pulse/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ClutchPBCFO">
+<meta name="twitter:image" content="https://clutchpbcfo.github.io/pulse/og.png">
+<link rel="icon" href="https://clutchpbcfo.github.io/pulse/favicon-32.png">
+<link rel="apple-touch-icon" href="https://clutchpbcfo.github.io/pulse/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cy:#00e5ff;--cy2:#7df7ff;--pk:#ff4da6;--bg:#0a0c14;--bg2:#0d1019;--card:#10141f;--line:rgba(0,229,255,.14);--txt:#eef4ff;--mut:#8b96ad}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:Inter,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+::selection{background:var(--cy);color:#03131a}
+h1,h2,h3,.disp{font-family:'Exo 2',Inter,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 6%}
+a{color:var(--cy);text-decoration:none}
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(10,12,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.navbrand{display:flex;align-items:center;gap:10px;font-family:'Exo 2';font-weight:900;letter-spacing:.18em;font-size:1.05rem;color:var(--txt)}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--cy);box-shadow:0 0 12px var(--cy);animation:beat 1.1s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.45)}28%{transform:scale(1)}}
+.navlinks{display:flex;gap:22px;align-items:center;font-size:.82rem;font-weight:600;letter-spacing:.08em}
+.navlinks a{color:var(--mut)} .navlinks a:hover{color:var(--cy)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:'Exo 2';font-weight:800;letter-spacing:.1em;border-radius:14px;padding:14px 26px;font-size:.95rem;transition:transform .15s,box-shadow .15s;cursor:pointer}
+.btn:active{transform:scale(.97)}
+.btn-cy{background:linear-gradient(180deg,var(--cy2),var(--cy));color:#02161c;box-shadow:0 0 28px rgba(0,229,255,.35)}
+.btn-cy:hover{transform:translateY(-2px);box-shadow:0 6px 38px rgba(0,229,255,.5)}
+.btn-ghost{border:1px solid var(--line);color:var(--txt);background:rgba(0,229,255,.05)}
+.btn-ghost:hover{border-color:var(--cy);background:rgba(0,229,255,.1)}
+.btn-sm{padding:9px 18px;font-size:.78rem;border-radius:10px}
+/* hero */
+header{position:relative;padding:84px 0 40px;text-align:center}
+.halo{position:absolute;inset:auto 0 auto 50%;top:-120px;width:900px;height:900px;transform:translateX(-50%);background:radial-gradient(circle,rgba(0,229,255,.16),rgba(255,77,166,.05) 40%,transparent 65%);pointer-events:none;filter:blur(10px)}
+.mascot{width:min(330px,68vw);filter:drop-shadow(0 24px 60px rgba(0,229,255,.35));animation:float 4.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-18px) rotate(2deg)}}
+.logo{width:min(460px,82vw);margin:18px auto 6px;display:block}
+.tag{font-family:'Exo 2';font-weight:900;font-size:clamp(1.5rem,4.6vw,2.6rem);letter-spacing:.04em;background:linear-gradient(180deg,#fff,var(--cy));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{max-width:560px;margin:14px auto 30px;color:var(--mut);font-size:1.05rem}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.store{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:14px;padding:10px 20px;background:var(--card)}
+.store svg{width:26px;height:26px;fill:#fff}
+.store .s1{font-size:.62rem;color:var(--mut);letter-spacing:.14em;text-transform:uppercase}
+.store .s2{font-family:'Exo 2';font-weight:800;font-size:1rem;color:#fff;line-height:1.1}
+/* ekg divider */
+.ekg{display:block;width:100%;height:70px;margin:30px 0 0}
+.ekg path{fill:none;stroke:var(--cy);stroke-width:2.5;stroke-linecap:round;filter:drop-shadow(0 0 6px var(--cy));stroke-dasharray:1200;stroke-dashoffset:1200;animation:trace 3.2s linear infinite}
+@keyframes trace{to{stroke-dashoffset:0}}
+/* sections */
+section{padding:74px 0;position:relative}
+.kicker{font-family:'Exo 2';font-weight:800;font-size:.75rem;letter-spacing:.35em;color:var(--cy);text-transform:uppercase;margin-bottom:12px}
+h2{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;letter-spacing:.02em;margin-bottom:14px}
+.lead{color:var(--mut);max-width:640px;font-size:1.06rem}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:38px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:rgba(0,229,255,.45)}
+.card .ic{font-size:1.9rem;margin-bottom:12px;display:block}
+.card h3{font-size:1.12rem;font-weight:800;letter-spacing:.05em;margin-bottom:8px}
+.card p{color:var(--mut);font-size:.93rem}
+/* film */
+.film{border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,229,255,.12);background:#000}
+.film video{display:block;width:100%}
+/* how to */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px;counter-reset:st}
+.step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;counter-increment:st;position:relative}
+.step::before{content:"0" counter(st);font-family:'Exo 2';font-weight:900;font-size:2.2rem;color:transparent;-webkit-text-stroke:1.5px var(--cy);display:block;margin-bottom:8px;opacity:.85}
+.step h3{font-size:1rem;margin-bottom:6px;letter-spacing:.04em}
+.step p{color:var(--mut);font-size:.9rem}
+/* shots */
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;margin-top:38px}
+.shot{border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--card);transition:transform .25s}
+.shot:hover{transform:translateY(-6px) scale(1.02)}
+.shot img{width:100%;display:block}
+/* fair */
+.fair{background:linear-gradient(180deg,var(--bg2),var(--bg));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fairbox{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.term{background:#070a10;border:1px solid var(--line);border-radius:14px;padding:22px;font-family:ui-monospace,Menlo,monospace;font-size:.8rem;color:#9fe8f5;box-shadow:0 16px 50px rgba(0,0,0,.5)}
+.term .ok{color:#7CFF7C}.term .dim{color:#46566e}
+/* more games */
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:34px}
+.gcard{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:20px 16px;text-align:center;transition:transform .2s,border-color .2s}
+.gcard:hover{transform:translateY(-4px);border-color:var(--cy)}
+.gcard .gl{font-size:1.7rem;display:block;margin-bottom:8px}
+.gcard b{font-family:'Exo 2';letter-spacing:.12em;font-size:.85rem;color:var(--txt);display:block}
+.gcard span{font-size:.68rem;color:var(--mut);letter-spacing:.06em}
+.gcard .live{color:#7CFF7C}
+/* faq */
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:12px}
+summary{cursor:pointer;font-weight:700;font-family:'Exo 2';letter-spacing:.03em;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:"+";color:var(--cy);font-size:1.3rem;font-weight:400}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:var(--mut);font-size:.93rem}
+/* final */
+.final{text-align:center;padding:100px 0}
+.final h2{font-size:clamp(2rem,6vw,3.4rem)}
+footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--mut);font-size:.78rem;letter-spacing:.08em}
+footer a{color:var(--mut)} footer a:hover{color:var(--cy)}
+@media(max-width:760px){.fairbox{grid-template-columns:1fr}.navlinks .hide-m{display:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="navbrand"><span class="dot"></span>PULSE</div>
+  <div class="navlinks">
+    <a class="hide-m" href="#how">HOW TO PLAY</a>
+    <a class="hide-m" href="#fair">PROVABLY FAIR</a>
+    <a class="hide-m" href="#more">MORE GAMES</a>
+    <a class="btn btn-cy btn-sm" href="https://clutchpbcfo.github.io/pulse/">▶ PLAY FREE</a>
+  </div>
+</div></nav>
+
+<header>
+  <div class="halo"></div>
+  <div class="wrap">
+    <img class="mascot" src="https://clutchpbcfo.github.io/pulse/pulse-mascot.png" alt="PULSE mascot — a glossy neon orb with a heartbeat line" width="660" height="660">
+    <img class="logo" src="https://clutchpbcfo.github.io/pulse/pulse-logo.svg" alt="PULSE logo">
+    <div class="tag">One tap. Perfect.</div>
+    <p class="sub">The reflex score-chaser. The ring sweeps, the beat lands, you get one tap to nail dead-center. Perfects chain combos. Combos chain glory. Miss, and the run is over.</p>
+    <div class="cta">
+      <a class="btn btn-cy" href="https://clutchpbcfo.github.io/pulse/">▶ PLAY FREE IN BROWSER</a>
+      <a class="store" id="appstore" href="#appstore" aria-label="Coming soon to the App Store">
+        <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        <span><span class="s1">App Store</span><br><span class="s2">COMING SOON</span></span>
+      </a>
+    </div>
+  </div>
+  <svg class="ekg" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 35 H320 l14-12 16 24 18-40 20 52 16-32 12 8 H640 l14-12 16 24 18-40 20 52 16-32 12 8 H1200"/>
+  </svg>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">The Game</div>
+    <h2>A heartbeat that fights back</h2>
+    <p class="lead">PULSE looks gentle for exactly four taps. Then the sweep accelerates, the windows shrink, and your "easy" run becomes a duel between your reflexes and a rhythm that refuses to wait for you.</p>
+    <div class="grid3">
+      <div class="card"><span class="ic">⚡</span><h3>PURE REFLEX</h3><p>No loadouts, no upgrades, no luck. One input — your tap — against a sweep that gets meaner every beat. The skill ceiling is the sky.</p></div>
+      <div class="card"><span class="ic">🎯</span><h3>CHASE THE PERFECT</h3><p>Dead-center taps score Perfects. Perfects build combos. Combos multiply everything. One sloppy tap and the multiplier flatlines.</p></div>
+      <div class="card"><span class="ic">🏆</span><h3>OWN THE BOARD</h3><p>Global and daily leaderboards, top-100 deep. Post a score, claim your tag, defend it tomorrow. Fresh boards are waiting to be named.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker">Intro Film</div>
+    <h2>Feel the beat</h2>
+    <div class="film" style="margin-top:30px">
+      <video src="https://clutchpbcfo.github.io/pulse/pulse-intro.mp4" autoplay muted loop playsinline poster="https://clutchpbcfo.github.io/pulse/og.png"></video>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="padding-top:20px">
+  <div class="wrap">
+    <div class="kicker">How To Play</div>
+    <h2>Learn it in one beat</h2>
+    <div class="steps">
+      <div class="step"><h3>WATCH THE SWEEP</h3><p>A marker races around the pulse ring. It only slows down for nobody.</p></div>
+      <div class="step"><h3>TAP THE BEAT</h3><p>One tap when the marker crosses the target zone. Center hit = PERFECT.</p></div>
+      <div class="step"><h3>CHAIN COMBOS</h3><p>Stack Perfects to climb the multiplier and a musical scale that rises with you.</p></div>
+      <div class="step"><h3>POST YOUR SCORE</h3><p>Choose a tag, hit the board, and watch the world try to take it from you.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:10px">
+  <div class="wrap">
+    <div class="kicker">Screenshots</div>
+    <h2>Neon, distilled</h2>
+    <div class="shots">
+      <a class="shot" href="https://clutchpbcfo.github.io/pulse/"><img src="https://clutchpbcfo.github.io/pulse/screenshot-1-hero.png" alt="PULSE hero screen" loading="lazy"></a>
+      <a class="shot" href="https://clutchpbcfo.github.io/pulse/"><img src="https://clutchpbcfo.github.io/pulse/screenshot-2-gameplay.png" alt="PULSE gameplay" loading="lazy"></a>
+      <a class="shot" href="https://clutchpbcfo.github.io/pulse/"><img src="https://clutchpbcfo.github.io/pulse/screenshot-3-combo.png" alt="PULSE combo chain" loading="lazy"></a>
+      <a class="shot" href="https://clutchpbcfo.github.io/pulse/"><img src="https://clutchpbcfo.github.io/pulse/screenshot-4-leaderboard.png" alt="PULSE leaderboard" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<section class="fair" id="fair">
+  <div class="wrap fairbox">
+    <div>
+      <div class="kicker">Provably Fair</div>
+      <h2>Forged scores can't pass</h2>
+      <p class="lead">Every run you submit is <b style="color:var(--txt)">replayed on the server</b> through the same deterministic simulation the game runs on your screen. The leaderboard stores the score the replay computes — never the number a client claims. No accounts, no personal data. Just your tag and your taps.</p>
+    </div>
+    <div class="term">
+      <div class="dim">$ pulse verify --run 88412</div>
+      <div>replaying tap timeline… <span class="ok">✓</span></div>
+      <div>sim parity check……… <span class="ok">✓</span></div>
+      <div>wall-clock sanity…… <span class="ok">✓</span></div>
+      <div>single-use token…… <span class="ok">✓</span></div>
+      <div class="ok">SCORE VERIFIED → board write: rank #7</div>
+    </div>
+  </div>
+</section>
+
+<section id="more">
+  <div class="wrap">
+    <div class="kicker">More Games</div>
+    <h2>The INSERT COIN arcade</h2>
+    <p class="lead">PULSE is one cabinet on a growing floor. Every game: free, skill-first, provably fair.</p>
+    <div class="mg">
+      <a class="gcard" href="https://apps.apple.com/us/app/stak-tower-stack-game/id6775574900"><span class="gl">🏗️</span><b>STAK</b><span class="live">● ON THE APP STORE</span></a>
+      <a class="gcard" href="https://reachfi.network/fuse/"><span class="gl">💣</span><b>FUSE</b><span>CUT IT CLOSE</span></a>
+      <a class="gcard" href="https://clutchpbcfo.github.io/nil"><span class="gl">♠️</span><b>NIL</b><span>SPADES</span></a>
+      <a class="gcard" href="https://clutchpbcfo.github.io/nerve"><span class="gl">🫀</span><b>NERVE</b><span>HOLD IT</span></a>
+      <a class="gcard" href="https://clutchpbcfo.github.io/rook"><span class="gl">♜</span><b>ROOK</b><span>3D CHESS</span></a>
+      <a class="gcard" href="https://clutchpbcfo.github.io/prism"><span class="gl">🔺</span><b>PRISM</b><span>AIM CROOKED</span></a>
+    </div>
+    <div style="text-align:center;margin-top:26px"><a class="btn btn-ghost" href="https://clutchpbcfo.github.io/arcade-shell/">ENTER THE ARCADE →</a></div>
+  </div>
+</section>
+
+<section style="padding-top:10px">
+  <div class="wrap" style="max-width:760px">
+    <div class="kicker">FAQ</div>
+    <h2>Quick answers</h2>
+    <div style="margin-top:26px">
+      <details><summary>Is PULSE really free?</summary><p>Completely. No ads, no in-app purchases, no real-money anything. It's a skill game — the only currency is your reflexes.</p></details>
+      <details><summary>Do I need an account?</summary><p>No. Pick a tag when you post a score. No sign-up, no personal data collected.</p></details>
+      <details><summary>How do you stop cheaters?</summary><p>Your gameplay input log is replayed server-side through the exact same simulation code. The score stored is the one the server computes — a forged number can never reach the board.</p></details>
+      <details><summary>Where can I play?</summary><p>Right now in any browser — phone or desktop. The iOS app is in App Review and lands on the App Store imminently.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2 class="disp">How long can you<br>keep the beat?</h2>
+    <div class="cta" style="margin-top:30px">
+      <a class="btn btn-cy" href="https://clutchpbcfo.github.io/pulse/">▶ PLAY PULSE FREE</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    PULSE · A <a href="https://reachfi.network">REACHFI NETWORK</a> GAME · A CLUTCH FOUNDATION OPERATION · <a href="https://x.com/ClutchPBCFO" rel="noopener">@CLUTCHPBCFO</a>
+  </div>
+</footer>
+
+</body>
+</html>
