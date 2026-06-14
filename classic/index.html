@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REACHFI — Crypto's Owned Broadcast Network</title>
+<meta name="description" content="The network is the product. Six channels. 1M+ followers. A 30-deep amplifier crew. Owned, not rented. The owned-and-operated broadcast network for Web3.">
+<link rel="canonical" href="https://reachfi.network/">
+<meta name="theme-color" content="#0a0a0b">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="REACHFI">
+<meta property="og:url" content="https://reachfi.network/">
+<meta property="og:title" content="REACHFI — The network is the product.">
+<meta property="og:description" content="Crypto's owned-and-operated broadcast network. Six channels, 1M+ combined reach, a 30-deep amplifier crew. Owned, not rented. Verified analytics, no middleman markup.">
+<meta property="og:image" content="https://clutchpbcfo.github.io/reachfi/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="REACHFI — the network is the product. 1M+ combined reach, 6 owned channels.">
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="REACHFI — The network is the product.">
+<meta name="twitter:description" content="Crypto's owned-and-operated broadcast network. 6 channels, 1M+ combined reach. Owned, not rented.">
+<meta name="twitter:image" content="https://clutchpbcfo.github.io/reachfi/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Expanded:wght@600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/ScrollTrigger.min.js"></script>
+<style>
+.channel-handle a{color:inherit;text-decoration:none;transition:color .15s}
+.channel-handle a:hover{color:var(--amber)}
+:root {
+  --bg: #0a0a0b;
+  --bg-1: #101012;
+  --bg-2: #16161a;
+  --bg-3: #1d1d22;
+  --border: #232328;
+  --border-bright: #32323a;
+  --text: #f5f5f2;
+  --dim: #9a9aa2;
+  --faint: #56565f;
+  --onair: #ff3b35;
+  --onair-deep: #c41f1a;
+  --amber: #ffb000;
+  --cyan: #36e0ff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body {
+  background:
+    radial-gradient(ellipse 1400px 700px at 50% -200px, rgba(245,245,242,0.05), transparent 60%),
+    radial-gradient(ellipse 1000px 500px at 100% 30%, rgba(255,176,0,0.05), transparent 70%),
+    var(--bg);
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+.mono { font-family: 'Space Mono', monospace; }
+.exp { font-family: 'Archivo Expanded', 'Archivo', sans-serif; }
+.container { max-width: 1340px; margin: 0 auto; padding: 0 5vw; }
+
+/* scanline texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+/* === LOADER === */
+.loader {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 10000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 28px;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.loader.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-mark {
+  font-family: 'Archivo Expanded', sans-serif;
+  font-weight: 800;
+  font-size: clamp(40px, 9vw, 120px);
+  letter-spacing: 0.04em;
+  position: relative;
+}
+.loader-mark .dot-air { color: var(--amber); }
+.loader-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--faint);
+  display: flex; align-items: center; gap: 10px;
+}
+.loader-status .blip {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--onair);
+  box-shadow: 0 0 12px var(--onair);
+  animation: blip 0.9s steps(1) infinite;
+}
+@keyframes blip { 0%,50%{opacity:1;} 51%,100%{opacity:0.2;} }
+.loader-bar {
+  width: 280px; max-width: 70vw; height: 2px;
+  background: var(--border); overflow: hidden; position: relative;
+}
+.loader-bar::after {
+  content:''; position:absolute; inset:0;
+  background: var(--amber); transform-origin: left;
+  animation: loadfill 1.7s cubic-bezier(.65,0,.35,1) forwards;
+}
+@keyframes loadfill { from{transform:scaleX(0);} to{transform:scaleX(1);} }
+
+/* === NAV === */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 16px 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(10,10,11,0.6);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: padding .3s, background .3s;
+}
+.nav.scrolled { padding: 10px 5vw; background: rgba(10,10,11,0.94); }
+.nav-mark {
+  font-family: 'Archivo Expanded', sans-serif;
+  font-weight: 800; font-size: 21px; letter-spacing: 0.06em;
+  display: flex; align-items: center; gap: 9px;
+}
+.nav-mark .sig {
+  display: inline-flex; align-items: flex-end; gap: 2px; height: 18px;
+}
+.nav-mark .sig i {
+  width: 3px; background: var(--amber); display: block;
+  animation: eq 1s ease-in-out infinite;
+}
+.nav-mark .sig i:nth-child(1){height:40%; animation-delay:0s;}
+.nav-mark .sig i:nth-child(2){height:80%; animation-delay:.2s;}
+.nav-mark .sig i:nth-child(3){height:55%; animation-delay:.4s;}
+.nav-mark .sig i:nth-child(4){height:95%; animation-delay:.1s;}
+@keyframes eq { 0%,100%{transform:scaleY(.4);} 50%{transform:scaleY(1);} }
+.nav-links { display: flex; gap: 30px; align-items: center; }
+.nav-links a {
+  font-family: 'Space Mono', monospace; font-size: 12px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--amber); }
+.nav-cta {
+  background: var(--text); color: var(--bg);
+  padding: 10px 18px; border-radius: 4px;
+  font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+  transition: transform .15s, box-shadow .15s;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,176,0,.28); }
+.nav-cta { white-space: nowrap; }
+.nav-cta .live { width:7px;height:7px;border-radius:50%;background:var(--onair); box-shadow:0 0 8px var(--onair); animation: blip 1.2s steps(1) infinite; }
+@media (max-width: 920px){ .nav-links{display:none;} }
+@media (max-width: 480px){
+  .nav-mark { font-size: 15px; gap: 6px; }
+  .nav-mark .sig { height: 13px; }
+  .nav-cta { font-size: 10px; padding: 8px 12px; }
+  .nav-cta .cta-rest { display: none; }
+}
+
+/* === HERO === */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  padding: 130px 5vw 70px; position: relative; overflow: hidden;
+}
+.hero-bg-dial {
+  position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg, rgba(255,176,0,0.10) 0px, rgba(255,176,0,0.10) 2px, transparent 2px, transparent 240px);
+  mask-image: linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+}
+.hero-inner { position: relative; z-index: 2; max-width: 1340px; margin: 0 auto; width: 100%; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: 'Space Mono', monospace; font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim);
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 8px 16px; margin-bottom: 32px;
+  background: rgba(255,255,255,0.02);
+}
+.hero-eyebrow .onair-pill {
+  display:inline-flex; align-items:center; gap:7px;
+  color: var(--onair); font-weight: 700;
+}
+.hero-eyebrow .onair-pill::before {
+  content:''; width:8px;height:8px;border-radius:50%;
+  background:var(--onair); box-shadow:0 0 10px var(--onair);
+  animation: blip 1.1s steps(1) infinite;
+}
+.hero h1 {
+  font-family: 'Archivo Expanded', sans-serif; font-weight: 800;
+  font-size: clamp(48px, 9vw, 150px); line-height: 0.92;
+  letter-spacing: -0.02em; margin-bottom: 28px; text-transform: uppercase;
+}
+.hero h1 .rent { color: var(--faint); position: relative; display: inline-block; }
+.hero h1 .rent::after {
+  content:''; position:absolute; left:-2%; right:-2%; top:52%; height:5px;
+  background: var(--onair); transform: scaleX(0); transform-origin:left;
+  animation: strike 0.6s ease forwards 2.2s;
+}
+@keyframes strike { to{transform:scaleX(1);} }
+.hero h1 .own { color: var(--text); border-bottom: 0.09em solid var(--amber); padding-bottom: 0.02em; }
+.hero-sub {
+  max-width: 680px; font-size: clamp(17px, 1.5vw, 21px); color: var(--dim);
+  margin-bottom: 40px; line-height: 1.55;
+}
+.hero-sub strong { color: var(--text); font-weight: 600; }
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.btn {
+  display:inline-flex; align-items:center; gap:11px; padding:17px 28px;
+  font-family:'Space Mono', monospace; font-size:13px; font-weight:700;
+  letter-spacing:0.08em; text-transform:uppercase; border-radius:5px;
+  transition: transform .2s, background .2s, box-shadow .2s; border:1px solid transparent;
+}
+.btn-primary { background: var(--text); color: var(--bg); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(255,176,0,.3); }
+.btn-ghost { background: transparent; border-color: var(--border-bright); color: var(--text); }
+.btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+.btn .arr { transition: transform .2s; }
+.btn:hover .arr { transform: translateX(4px); }
+
+/* VU meter row in hero */
+.hero-vu {
+  display: flex; align-items: flex-end; gap: 4px; height: 60px;
+  margin-top: 64px; max-width: 520px;
+}
+.hero-vu i {
+  flex: 1; background: linear-gradient(to top, #34343c, #6a6a74);
+  border-radius: 1px; opacity: .85;
+  animation: vu 1.4s ease-in-out infinite;
+}
+.hero-vu i:nth-child(3n){ background: linear-gradient(to top, var(--amber), #ffd98a); opacity:1; }
+@keyframes vu { 0%,100%{height:20%;} 50%{height:100%;} }
+
+/* === MARQUEE === */
+.marquee {
+  padding: 18px 0; background: var(--bg-1); color: var(--text);
+  overflow:hidden; position:relative; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+}
+.marquee-track {
+  display:flex; gap:48px; white-space:nowrap;
+  animation: scroll-mq 38s linear infinite;
+  font-family:'Archivo Expanded', sans-serif; font-weight:800;
+  font-size: clamp(20px, 3vw, 38px); letter-spacing:0.02em; text-transform:uppercase;
+}
+.marquee-track span { display:inline-flex; align-items:center; gap:48px; }
+.marquee-track .d { width:10px;height:10px;background:var(--amber);border-radius:50%;display:inline-block; }
+@keyframes scroll-mq { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.marquee.dark { background: var(--bg-1); color: var(--text); border-color: var(--border); }
+.marquee.dark .marquee-track { animation-duration: 46s; animation-direction: reverse; }
+.marquee.dark .d { background: var(--amber); }
+
+/* === SECTION === */
+.section { padding: 120px 5vw; position: relative; }
+.section-inner { max-width: 1340px; margin: 0 auto; }
+.section-head { margin-bottom: 60px; max-width: 1340px; margin-left:auto; margin-right:auto; }
+.tag {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--amber); margin-bottom:18px;
+}
+.tag::before { content:''; width:24px;height:1px;background:var(--amber); }
+.section h2 {
+  font-family:'Archivo Expanded', sans-serif; font-weight:800;
+  font-size: clamp(38px, 6vw, 84px); line-height:0.95; letter-spacing:-0.015em;
+  text-transform:uppercase; margin-bottom:18px;
+}
+.section h2 .air { color: var(--text); border-bottom: 0.09em solid var(--amber); padding-bottom: 0.02em; }
+.section-lede { font-size: clamp(17px,1.4vw,20px); color: var(--dim); max-width: 680px; }
+
+/* === THE NETWORK / DIAL === */
+.dial-strip {
+  position: relative; height: 64px; margin-bottom: 40px;
+  border:1px solid var(--border); border-radius:6px; background: var(--bg-1);
+  overflow: hidden;
+}
+.dial-strip .ticks {
+  position:absolute; inset:0;
+  background-image: repeating-linear-gradient(90deg, var(--border) 0px, var(--border) 1px, transparent 1px, transparent 28px);
+  opacity:.7;
+}
+.dial-strip .ticks.major {
+  background-image: repeating-linear-gradient(90deg, var(--border-bright) 0px, var(--border-bright) 2px, transparent 2px, transparent 140px);
+}
+.dial-strip .needle {
+  position:absolute; top:0; bottom:0; width:2px; background:var(--amber);
+  box-shadow:0 0 12px rgba(255,176,0,.5); left: 20%;
+  animation: sweep 6s ease-in-out infinite alternate;
+}
+.dial-strip .needle::before {
+  content:''; position:absolute; top:-1px; left:-4px; width:10px;height:10px;border-radius:50%;
+  background:var(--onair); box-shadow:0 0 12px var(--onair);
+}
+@keyframes sweep { 0%{left:8%;} 100%{left:92%;} }
+.dial-strip .label {
+  position:absolute; bottom:8px; left:14px;
+  font-family:'Space Mono', monospace; font-size:10px; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--faint);
+}
+.dial-strip .label.r { left:auto; right:14px; }
+
+.network-grid {
+  display:grid; grid-template-columns: repeat(2, 1fr); gap:16px;
+}
+@media (max-width: 820px){ .network-grid{grid-template-columns:1fr;} }
+.channel {
+  background: var(--bg-1); border:1px solid var(--border);
+  padding: 28px 30px; position:relative; overflow:hidden;
+  transition: border .2s, transform .2s;
+}
+.channel:hover { border-color: var(--amber); transform: translateY(-3px); }
+.channel.flagship { border-color: rgba(255,176,0,.4); background: linear-gradient(135deg, rgba(255,176,0,.06), transparent 60%); }
+.channel-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; }
+.channel-freq {
+  font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.1em;
+  color: var(--amber); text-transform:uppercase;
+}
+.channel-verified {
+  font-family:'Space Mono', monospace; font-size:10px; letter-spacing:0.1em;
+  color: var(--amber); text-transform:uppercase; display:flex; align-items:center; gap:5px;
+}
+.channel-verified::before { content:'✓'; }
+.channel-handle {
+  font-family:'Archivo Expanded', sans-serif; font-weight:700; font-size: clamp(24px,3vw,34px);
+  line-height:1; margin-bottom:6px;
+}
+.channel-niche {
+  font-family:'Space Mono', monospace; font-size:12px; color: var(--dim);
+  text-transform:uppercase; letter-spacing:0.08em; margin-bottom:24px;
+}
+.channel-foot { display:flex; justify-content:space-between; align-items:flex-end; }
+.channel-count .n {
+  font-family:'Archivo Expanded', sans-serif; font-weight:800; font-size: clamp(30px,4vw,46px);
+  line-height:1; color: var(--text);
+}
+.channel-count .l {
+  font-family:'Space Mono', monospace; font-size:10px; color:var(--faint);
+  letter-spacing:0.15em; text-transform:uppercase; margin-top:4px;
+}
+.signal-bars { display:flex; align-items:flex-end; gap:3px; height:38px; }
+.signal-bars i { width:5px; background: var(--border-bright); border-radius:1px; }
+.signal-bars i.on { background: var(--amber); }
+.channel:hover .signal-bars i.on { box-shadow:0 0 8px var(--amber); }
+
+/* === STATS === */
+.stats { display:grid; grid-template-columns: repeat(4,1fr); border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--bg-1); }
+.stat { padding:52px 30px; border-right:1px solid var(--border); position:relative; }
+.stat:last-child{border-right:none;}
+.stat .n { font-family:'Archivo Expanded', sans-serif; font-weight:800; font-size:clamp(44px,6vw,82px); line-height:.9; color:var(--amber); letter-spacing:-0.02em; }
+.stat .l { font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--dim); margin-top:12px; display:block; max-width:200px; line-height:1.4; }
+.stat::before { content: attr(data-i); position:absolute; top:14px; right:18px; font-family:'Space Mono',monospace; font-size:10px; color:var(--faint); }
+@media (max-width:900px){ .stats{grid-template-columns:1fr 1fr;} .stat:nth-child(2){border-right:none;} .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--border);} }
+@media (max-width:520px){ .stats{grid-template-columns:1fr;} .stat{border-right:none;border-bottom:1px solid var(--border);} }
+
+/* === THESIS (rented vs owned) === */
+.thesis { display:grid; grid-template-columns: 1fr 1fr; gap:0; border:1px solid var(--border); }
+@media (max-width:820px){ .thesis{grid-template-columns:1fr;} }
+.thesis-col { padding:48px 44px; }
+.thesis-col.rent { background: var(--bg-1); border-right:1px solid var(--border); }
+.thesis-col.own { background: linear-gradient(135deg, rgba(255,176,0,.06), transparent); position:relative; }
+@media (max-width:820px){ .thesis-col.rent{border-right:none;border-bottom:1px solid var(--border);} }
+.thesis-col .ht {
+  font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.15em; text-transform:uppercase;
+  margin-bottom:20px;
+}
+.thesis-col.rent .ht { color: var(--faint); }
+.thesis-col.own .ht { color: var(--amber); }
+.thesis-col h3 { font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(26px,3vw,38px); line-height:1; margin-bottom:24px; text-transform:uppercase; }
+.thesis-col.rent h3 { color: var(--dim); }
+.thesis-col ul { list-style:none; }
+.thesis-col li { padding:14px 0 14px 28px; position:relative; font-size:15px; border-bottom:1px solid var(--border); color:var(--dim); }
+.thesis-col li:last-child{border-bottom:none;}
+.thesis-col.rent li::before { content:'✕'; position:absolute; left:0; color:var(--faint); font-weight:700; }
+.thesis-col.own li::before { content:'✓'; position:absolute; left:0; color:var(--amber); font-weight:700; }
+.thesis-col.own li { color: var(--text); }
+
+/* === PACKAGES === */
+.packages { display:grid; grid-template-columns: repeat(4,1fr); gap:0; border:1px solid var(--border); }
+@media (max-width:1000px){ .packages{grid-template-columns:1fr 1fr;} }
+@media (max-width:600px){ .packages{grid-template-columns:1fr;} }
+.pkg { padding:40px 30px; border-right:1px solid var(--border); background:var(--bg-1); position:relative; transition: background .2s; }
+.pkg:last-child{border-right:none;}
+.pkg:hover{ background: var(--bg-2); }
+.pkg.featured { background: linear-gradient(180deg, rgba(255,176,0,.08), transparent 50%); }
+.pkg.featured::before { content:'MOST BOOKED'; position:absolute; top:0; left:0; right:0; text-align:center; background:var(--text); color:var(--bg); font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.2em; padding:5px; }
+.pkg.featured .pkg-name { margin-top:22px; }
+@media (max-width:1000px){ .pkg:nth-child(2){border-right:none;} .pkg:nth-child(1),.pkg:nth-child(2){border-bottom:1px solid var(--border);} }
+@media (max-width:600px){ .pkg{border-right:none;border-bottom:1px solid var(--border);} .pkg:last-child{border-bottom:none;} }
+.pkg-tier { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--amber); margin-bottom:14px; }
+.pkg-name { font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:30px; line-height:1; text-transform:uppercase; margin-bottom:8px; }
+.pkg-tagline { font-family:'Space Mono',monospace; font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:24px; min-height:32px; }
+.pkg-list { list-style:none; margin-bottom:28px; }
+.pkg-list li { padding:9px 0 9px 20px; position:relative; font-size:13px; color:var(--dim); border-bottom:1px solid var(--border); }
+.pkg-list li:last-child{border-bottom:none;}
+.pkg-list li::before { content:'→'; position:absolute; left:0; color:var(--amber); }
+.pkg-price { font-family:'Space Mono',monospace; font-size:12px; color:var(--faint); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:18px; }
+.pkg-cta { display:inline-flex; align-items:center; gap:8px; font-family:'Space Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); padding-bottom:5px; border-bottom:1px solid var(--amber); transition: gap .2s; }
+.pkg-cta:hover{ gap:14px; }
+
+/* === PROCESS === */
+.process { border-top:1px solid var(--border); }
+.pstep { display:grid; grid-template-columns:100px 1fr auto; gap:40px; align-items:center; padding:40px 0; border-bottom:1px solid var(--border); transition: background .2s, padding .2s; }
+.pstep:hover{ background:var(--bg-1); padding-left:14px; padding-right:14px; }
+.pstep .pn { font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:72px; line-height:.85; color:var(--amber); }
+.pstep h3 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:30px; line-height:1; text-transform:uppercase; margin-bottom:10px; }
+.pstep p { color:var(--dim); font-size:15px; max-width:560px; }
+.pstep .pm { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--faint); white-space:nowrap; }
+@media (max-width:760px){ .pstep{grid-template-columns:1fr; gap:14px; padding:30px 0;} .pstep .pm{display:none;} }
+
+/* === CASE STUDY === */
+.case {
+  border:1px solid var(--border); background: var(--bg-1);
+  display:grid; grid-template-columns: 1fr 1fr; overflow:hidden;
+}
+@media (max-width:880px){ .case{grid-template-columns:1fr;} }
+.case-l { padding:56px 48px; border-right:1px solid var(--border); }
+@media (max-width:880px){ .case-l{border-right:none;border-bottom:1px solid var(--border);} }
+.case-badge { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--amber); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+.case-badge::before { content:''; width:8px;height:8px;border-radius:50%; background:var(--amber); box-shadow:0 0 10px var(--amber); }
+.case h3 { font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(32px,4vw,52px); line-height:.95; text-transform:uppercase; margin-bottom:18px; }
+.case p { color:var(--dim); font-size:15px; line-height:1.6; margin-bottom:28px; }
+.case-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:32px; }
+.case-tags span { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--dim); border:1px solid var(--border); padding:6px 12px; border-radius:100px; }
+.case-r { padding:56px 48px; display:flex; flex-direction:column; justify-content:center; gap:24px; background: radial-gradient(ellipse at 70% 30%, rgba(255,176,0,.08), transparent 70%); }
+.case-metric { }
+.case-metric .n { font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:clamp(40px,6vw,72px); line-height:.9; color:var(--amber); }
+.case-metric .l { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--dim); margin-top:8px; }
+
+/* === FAQ === */
+.faq { border-top:1px solid var(--border); }
+.faq-item { border-bottom:1px solid var(--border); }
+.faq-q { padding:26px 0; display:flex; justify-content:space-between; align-items:center; gap:28px; cursor:pointer; font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:clamp(18px,2.2vw,26px); line-height:1.2; text-transform:uppercase; user-select:none; }
+.faq-q:hover{ color:var(--amber); }
+.faq-q .pm { width:30px;height:30px;border:1px solid var(--border-bright); border-radius:50%; display:flex;align-items:center;justify-content:center; font-family:'Space Mono',monospace; font-size:18px; color:var(--amber); flex-shrink:0; transition: transform .3s, background .2s; }
+.faq-item.open .faq-q .pm{ transform:rotate(45deg); background:var(--amber); color:var(--bg); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height .4s cubic-bezier(.65,0,.35,1); color:var(--dim); font-size:16px; line-height:1.7; }
+.faq-item.open .faq-a{ max-height:420px; }
+.faq-a-inner{ padding:0 0 30px; max-width:760px; }
+
+/* === CLOSING === */
+.closing { min-height:80vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:120px 5vw; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,176,0,.08), transparent), var(--bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+.closing .onair-big { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.3em; text-transform:uppercase; color:var(--onair); margin-bottom:28px; display:flex; align-items:center; gap:10px; }
+.closing .onair-big::before, .closing .onair-big::after { content:''; width:40px;height:1px;background:var(--onair); }
+.closing h2 { font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(48px,9vw,140px); line-height:.9; letter-spacing:-0.02em; text-transform:uppercase; margin-bottom:26px; }
+.closing h2 .air{ color:var(--text); border-bottom:0.09em solid var(--amber); padding-bottom:0.02em; }
+.closing p { font-size:clamp(17px,1.3vw,21px); color:var(--dim); max-width:560px; margin-bottom:44px; }
+
+/* === FOOTER === */
+.footer { padding:70px 5vw 40px; }
+.footer-inner { max-width:1340px; margin:0 auto; }
+.footer-top { display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:64px; }
+@media (max-width:880px){ .footer-top{grid-template-columns:1fr 1fr;} }
+@media (max-width:520px){ .footer-top{grid-template-columns:1fr;} }
+.footer-mark { font-family:'Archivo Expanded',sans-serif; font-weight:800; font-size:32px; letter-spacing:0.04em; margin-bottom:14px; }
+.footer-mark .air{ color:var(--amber); }
+.footer-brand p { color:var(--dim); font-size:14px; max-width:300px; }
+.footer-col h4 { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--faint); margin-bottom:18px; }
+.footer-col ul{ list-style:none; display:flex; flex-direction:column; gap:11px; }
+.footer-col a{ color:var(--dim); font-size:14px; transition:color .2s; }
+.footer-col a:hover{ color:var(--amber); }
+.footer-bottom { border-top:1px solid var(--border); padding-top:28px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+.footer-mega { font-family:'Archivo Expanded',sans-serif; font-weight:900; font-size:clamp(80px,20vw,300px); line-height:.8; color:transparent; -webkit-text-stroke:1px rgba(255,176,0,.12); text-align:center; margin-top:50px; letter-spacing:0.02em; overflow:hidden; white-space:nowrap; }
+
+/* reveal */
+.reveal{opacity:0; transform:translateY(40px); transition:opacity .8s, transform .8s;}
+.reveal.in{opacity:1; transform:none;}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;} .reveal{opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-mark exp">REACH<span class="dot-air">/</span>FI</div>
+  <div class="loader-bar"></div>
+  <div class="loader-status"><span class="blip"></span> ESTABLISHING REACH</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-mark exp">
+    <span class="sig"><i></i><i></i><i></i><i></i></span>
+    REACH<span style="color:var(--amber)">FI</span>
+  </a>
+  <div class="nav-links">
+    <a href="#network">Network</a>
+    <a href="#why">Why Owned</a>
+    <a href="#packages">Packages</a>
+    <a href="#process">Process</a>
+    <a href="#studio">Studio</a>
+  </div>
+  <!-- PLUG: Telegram booking link -->
+  <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="nav-cta"><span class="live"></span> Book<span class="cta-rest">&nbsp;a Campaign</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg-dial"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="onair-pill">ON AIR</span> · CRYPTO'S OWNED BROADCAST NETWORK
+    </div>
+    <h1>
+      The network is<br>the <span class="own">product.</span>
+    </h1>
+    <p class="hero-sub">
+      Six channels. <strong>1M+ followers.</strong> A 30-deep amplifier crew on every broadcast. Owned, not rented. You're not booking a list of influencers who <em>might</em> post. You're booking a broadcast network we operate in-house, with analytics we actually control.
+    </p>
+    <div class="hero-ctas">
+      <!-- PLUG: Telegram booking link -->
+      <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book a campaign <span class="arr">→</span></a>
+      <a href="#network" class="btn btn-ghost">See the network <span class="arr">↓</span></a>
+    </div>
+    <div class="hero-vu" id="vu"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>1M+ COMBINED REACH<span class="d"></span></span>
+    <span>6 OWNED CHANNELS<span class="d"></span></span>
+    <span>30+ AMPLIFIER ACCOUNTS<span class="d"></span></span>
+    <span>OWNED · NOT RENTED<span class="d"></span></span>
+    <span>VERIFIED ANALYTICS<span class="d"></span></span>
+    <span>NO MIDDLEMEN<span class="d"></span></span>
+    <span>1M+ COMBINED REACH<span class="d"></span></span>
+    <span>6 OWNED CHANNELS<span class="d"></span></span>
+    <span>30+ AMPLIFIER ACCOUNTS<span class="d"></span></span>
+    <span>OWNED · NOT RENTED<span class="d"></span></span>
+    <span>VERIFIED ANALYTICS<span class="d"></span></span>
+    <span>NO MIDDLEMEN<span class="d"></span></span>
+  </div>
+</div>
+
+<!-- THE NETWORK -->
+<section class="section" id="network">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="tag">01 / The Network</div>
+      <h2>Six channels.<br>One <span class="air">network.</span></h2>
+      <p class="section-lede">Each channel is an owned-and-operated audience with its own culture and reach. Run one, run a few, or take over the whole network. Follower counts are the floor: a 30-deep crew of subscribed accounts piles into every broadcast, so impressions outrun the follower math. Full verified analytics shared on every campaign.</p>
+    </div>
+
+    <!-- DIAL -->
+    <div class="dial-strip reveal">
+      <div class="ticks"></div>
+      <div class="ticks major"></div>
+      <div class="needle"></div>
+      <div class="label">◂ THE NETWORK</div>
+      <div class="label r">1M+ REACH ▸</div>
+    </div>
+
+    <div class="network-grid">
+      <!-- PLUG: replace follower counts with verified analytics -->
+      <div class="channel flagship reveal">
+        <div class="channel-top">
+          <span class="channel-freq">CH.01 · FLAGSHIP</span>
+          <span class="channel-verified">Verified</span>
+        </div>
+        <div class="channel-handle exp"><a href="https://x.com/Rothmus" target="_blank" rel="noopener">@Rothmus</a></div>
+        <div class="channel-niche">Liberty · Macro · Memes</div>
+        <div class="channel-foot">
+          <div class="channel-count"><div class="n" data-count="668" data-suffix="K">668K</div><div class="l">Followers</div></div>
+          <div class="signal-bars"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+        </div>
+      </div>
+
+      <div class="channel reveal">
+        <div class="channel-top">
+          <span class="channel-freq">CH.02 · VIRAL</span>
+          <span class="channel-verified">Verified</span>
+        </div>
+        <div class="channel-handle exp"><a href="https://x.com/WomenBeingAwful" target="_blank" rel="noopener">@WomenBeingAwful</a></div>
+        <div class="channel-niche">Viral · Culture · Memes</div>
+        <div class="channel-foot">
+          <div class="channel-count"><div class="n" data-count="363" data-suffix="K">363K</div><div class="l">Followers</div></div>
+          <div class="signal-bars"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+        </div>
+      </div>
+
+      
+      
+      <div class="channel reveal">
+        <div class="channel-top">
+          <span class="channel-freq">CH.03 · TRADING</span>
+          <span class="channel-verified">Verified</span>
+        </div>
+        <div class="channel-handle exp"><a href="https://x.com/ClutchPBCFO" target="_blank" rel="noopener">@ClutchPBCFO</a></div>
+        <div class="channel-niche">Trading · TA · Trade Talk Pod</div>
+        <div class="channel-foot">
+          <div class="channel-count"><div class="n" data-count="14" data-suffix="K">14K</div><div class="l">Followers</div></div>
+          <div class="signal-bars"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      
+      <div class="channel reveal">
+        <div class="channel-top">
+          <span class="channel-freq">CH.04 · NFT</span>
+          <span class="channel-verified">Verified</span>
+        </div>
+        <div class="channel-handle exp"><a href="https://x.com/HermetixWeb3" target="_blank" rel="noopener">@HermetixWeb3</a></div>
+        <div class="channel-niche">NFT · Remilia · Culture</div>
+        <div class="channel-foot">
+          <div class="channel-count"><div class="n" data-count="6" data-suffix="K">6K</div><div class="l">Followers</div></div>
+          <div class="signal-bars"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      <div class="channel reveal">
+        <div class="channel-top">
+          <span class="channel-freq">CH.05 · DEX</span>
+        </div>
+        <div class="channel-handle exp"><a href="https://x.com/NovexFi" target="_blank" rel="noopener">@NovexFi</a></div>
+        <div class="channel-niche">DeFi · Perps · Novex Terminal</div>
+        <div class="channel-foot">
+          <div class="channel-count"><div class="n" data-count="733" data-suffix="">733</div><div class="l">Followers</div></div>
+          <div class="signal-bars"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      <div class="channel reveal">
+        <div class="channel-top">
+          <span class="channel-freq">CH.06 · FOUNDATION</span>
+        </div>
+        <div class="channel-handle exp"><a href="https://x.com/TheClutchFDN" target="_blank" rel="noopener">@TheClutchFDN</a></div>
+        <div class="channel-niche">Jobs · Charity · Podcasts</div>
+        <div class="channel-foot">
+          <div class="channel-count"><div class="n" data-count="578" data-suffix="">578</div><div class="l">Followers</div></div>
+          <div class="signal-bars"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+
+      <div class="channel reveal" style="display:flex; flex-direction:column; justify-content:center; align-items:flex-start; background:linear-gradient(135deg, rgba(54,224,255,.06), transparent 60%); border-color:rgba(54,224,255,.3);">
+        <div class="channel-freq" style="color:var(--cyan); margin-bottom:14px;">+ THE CREW</div>
+        <div class="channel-handle exp" style="color:var(--cyan);">30+</div>
+        <div class="channel-niche">Amplifier accounts · subscribed · always around</div>
+        <p style="color:var(--dim); font-size:14px; margin-top:8px;">A 30-deep crew of allied accounts rides every broadcast: replies, reposts, quote chains. Followers are the floor. Impressions are the product.</p>
+      </div>
+
+      <div class="channel reveal" style="display:flex; flex-direction:column; justify-content:center; align-items:flex-start; background:linear-gradient(135deg, rgba(255,176,0,.06), transparent 60%); border-color:rgba(255,176,0,.3);">
+        <div class="channel-freq" style="color:var(--amber); margin-bottom:14px;">▸ FULL NETWORK</div>
+        <div class="channel-handle exp" style="color:var(--amber);">1M+</div>
+        <div class="channel-niche">Combined reach · all channels</div>
+        <p style="color:var(--dim); font-size:14px; margin-top:8px;">Mass reach meets buyer intent. Big channels put you in front of everyone; the DeFi & trading channels put you in front of the wallets that actually ape.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat" data-i="01"><div class="n" data-count="1" data-suffix="M+">1M+</div><span class="l">Combined Followers Across the Network</span></div>
+  <div class="stat" data-i="02"><div class="n" data-count="6" data-suffix="">6</div><span class="l">Owned &amp; Operated Channels</span></div>
+  <div class="stat" data-i="03"><div class="n">0</div><span class="l">Middlemen Between You &amp; the Reach</span></div>
+  <div class="stat" data-i="04"><div class="n">100%</div><span class="l">Verified, First-Party Analytics</span></div>
+</section>
+
+<!-- WHY OWNED -->
+<section class="section" id="why">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="tag">02 / The Difference</div>
+      <h2>Owned beats <span class="air">rented.</span></h2>
+      <p class="section-lede">Most "crypto marketing agencies" are brokers. You pay them, they pay influencers, everyone takes a cut, and you cross your fingers. We cut the chain. We own the channels, so you get the reach direct.</p>
+    </div>
+
+    <div class="thesis">
+      <div class="thesis-col rent reveal">
+        <div class="ht">▸ THE OLD WAY · RENTED</div>
+        <h3>Broker &amp;<br>pray</h3>
+        <ul>
+          <li>Agency negotiates with third-party influencers</li>
+          <li>Markup stacked on every placement</li>
+          <li>No guarantee a post ever goes out</li>
+          <li>"Analytics" = screenshots you can't verify</li>
+          <li>Slow: days of back-and-forth per KOL</li>
+          <li>Reach evaporates the day you stop paying</li>
+        </ul>
+      </div>
+      <div class="thesis-col own reveal">
+        <div class="ht">▸ THE REACHFI WAY · OWNED</div>
+        <h3>Own the<br>signal</h3>
+        <ul>
+          <li>We control all six channels in-house</li>
+          <li>No middleman markup, direct rates</li>
+          <li>Placement guaranteed, on schedule</li>
+          <li>First-party analytics dashboard, every campaign</li>
+          <li>Fast: we hit publish the moment you're booked</li>
+          <li>A network that compounds, not a one-off buy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee dark">
+  <div class="marquee-track">
+    <span>BOOK A CAMPAIGN<span class="d"></span></span>
+    <span>BOOK THE WHOLE NETWORK<span class="d"></span></span>
+    <span>GO ON AIR<span class="d"></span></span>
+    <span>BOOK A CAMPAIGN<span class="d"></span></span>
+    <span>BOOK THE WHOLE NETWORK<span class="d"></span></span>
+    <span>GO ON AIR<span class="d"></span></span>
+    <span>BOOK A CAMPAIGN<span class="d"></span></span>
+    <span>BOOK THE WHOLE NETWORK<span class="d"></span></span>
+    <span>GO ON AIR<span class="d"></span></span>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<section class="section" id="packages">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="tag">03 / The Packages</div>
+      <h2>Pick your <span class="air">broadcast.</span></h2>
+      <p class="section-lede">From a single coordinated push to a full network takeover. Every package ships with a verified analytics report. All bookings start with a DM.</p>
+    </div>
+
+      <div class="reveal" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between;border:1px solid rgba(255,176,0,.4);background:linear-gradient(135deg,rgba(255,176,0,.10),transparent 70%);border-radius:6px;padding:18px 24px;margin-bottom:26px;">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);white-space:nowrap;">★ Founding 10 · Launch Offer</div>
+        <div style="font-size:15px;color:var(--text);flex:1;min-width:240px;">First 10 clients lock <strong>30% off for 12 months</strong>. <span style="color:var(--dim);">Founding-cohort rate. First come, first booked.</span></div>
+        <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="pkg-cta" style="white-space:nowrap;">Claim a founder spot →</a>
+      </div>
+    <div class="packages">
+      <div class="pkg reveal">
+        <div class="pkg-tier">TIER 01</div>
+        <div class="pkg-name exp">Spot</div>
+        <div class="pkg-tagline">Single coordinated push</div>
+        <ul class="pkg-list">
+          <li>1–2 channels of your choice</li>
+          <li>Coordinated post + repost</li>
+          <li>One Spaces / AMA mention</li>
+          <li>Reach + impressions report</li>
+        </ul>
+        <!-- PLUG: real pricing -->
+        <div class="pkg-price">Per push · DM for rates</div>
+        <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="pkg-cta">Book Spot →</a>
+      </div>
+
+      <div class="pkg featured reveal">
+        <div class="pkg-tier">TIER 02</div>
+        <div class="pkg-name exp">Campaign</div>
+        <div class="pkg-tagline">Multi-channel, multi-day arc</div>
+        <ul class="pkg-list">
+          <li>3–5 channels in sequence</li>
+          <li>Narrative arc across the week</li>
+          <li>Dedicated Power AMA slot</li>
+          <li>Meme + trading coverage</li>
+          <li>Full analytics dashboard</li>
+        </ul>
+        <!-- PLUG: real pricing -->
+        <div class="pkg-price">Per campaign · DM for rates</div>
+        <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="pkg-cta">Book Campaign →</a>
+      </div>
+
+      <div class="pkg reveal">
+        <div class="pkg-tier">TIER 03</div>
+        <div class="pkg-name exp">Network<br>Takeover</div>
+        <div class="pkg-tagline">All six channels. Full saturation.</div>
+        <ul class="pkg-list">
+          <li>Every channel in the network</li>
+          <li>Coordinated saturation push</li>
+          <li>Crew pile-on under every post</li>
+          <li>Headline AMA + meme blitz</li>
+          <li>Trading desk coverage</li>
+          <li>Priority scheduling</li>
+        </ul>
+        <!-- PLUG: real pricing -->
+        <div class="pkg-price">All 6 channels · DM for rates</div>
+        <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="pkg-cta">Book Takeover →</a>
+      </div>
+
+      <div class="pkg reveal">
+        <div class="pkg-tier">TIER 04</div>
+        <div class="pkg-name exp">Always-On</div>
+        <div class="pkg-tagline">Monthly retainer · ongoing presence</div>
+        <ul class="pkg-list">
+          <li>Recurring monthly slots</li>
+          <li>Priority across the network</li>
+          <li>Ongoing narrative management</li>
+          <li>Monthly performance review</li>
+        </ul>
+        <!-- PLUG: real pricing -->
+        <div class="pkg-price">Monthly retainer · DM for rates</div>
+        <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="pkg-cta">Enquire →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" id="process">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="tag">04 / How It Runs</div>
+      <h2>Brief to <span class="air">broadcast.</span></h2>
+      <p class="section-lede">Four steps from DM to dashboard. No agency-of-agencies, no mystery, no vanity metrics.</p>
+    </div>
+    <div class="process">
+      <div class="pstep reveal">
+        <div class="pn exp">01</div>
+        <div><h3 class="exp">Brief</h3><p>Tell us the project, the token, the goal. We'll tell you within a day if the network's a fit and which channels match your audience.</p></div>
+        <div class="pm">~24h reply</div>
+      </div>
+      <div class="pstep reveal">
+        <div class="pn exp">02</div>
+        <div><h3 class="exp">Channel Map</h3><p>We map your campaign across the network: which channels, what sequence, what message on each. Mass reach for awareness, DeFi channels for intent.</p></div>
+        <div class="pm">strategy call</div>
+      </div>
+      <div class="pstep reveal">
+        <div class="pn exp">03</div>
+        <div><h3 class="exp">Broadcast</h3><p>We hit publish. Coordinated posts, Spaces, AMAs, memes, and trading coverage roll out on schedule across the owned network.</p></div>
+        <div class="pm">on air</div>
+      </div>
+      <div class="pstep reveal">
+        <div class="pn exp">04</div>
+        <div><h3 class="exp">Report</h3><p>You get a first-party analytics dashboard: real reach, impressions, and engagement pulled from accounts we own. No screenshots. No guessing.</p></div>
+        <div class="pm">verified data</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCADE -->
+<section class="section" id="arcade">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="tag">05 / Off-Air</div>
+      <h2>The network also <span class="air">plays.</span></h2>
+      <p class="section-lede">INSERT COIN is the network's own arcade: free skill games on verified rails, plus a live PVP floor. Branded cabinets, sponsored tournaments, and high score bounties are bookable inventory.</p>
+    </div>
+<style>
+.ofa-card{display:block;background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:30px 28px;transition:border-color .2s,transform .2s;}
+.ofa-card:hover{transform:translateY(-3px);}
+.ofa-card.a:hover{border-color:var(--amber);}
+.ofa-card.p:hover{border-color:var(--onair);}
+</style>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:10px;">
+      <a class="ofa-card a" href="https://reachfi.network/arcade/">
+        <div class="mono" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;">CH.07 &middot; ARCADE</div>
+        <img src="https://clutchpbcfo.github.io/arcade-shell/wordmark.png" alt="INSERT COIN" style="height:32px;display:block;margin-bottom:14px;">
+        <p style="color:var(--dim);font-size:15px;line-height:1.65;">Free skill games. Verified high scores. No ads, no accounts. The same audience, off the clock.</p>
+        <div style="display:flex;gap:8px;margin:18px 0 22px;"><img src="data:image/webp;base64,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" alt="STAK" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"><img src="data:image/webp;base64,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" alt="PULSE" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"><img src="data:image/webp;base64,UklGRh4FAABXRUJQVlA4WAoAAAAQAAAAdwAAdwAAQUxQSIMBAAABkGNb27FnV+wZ2OnSWa1ts0ptDcDGEJxUTqnftm1Wn3HHeb+s56oTERMALZ2iagfXX/4yigKNv16uD9RGOuEyuqYO3vkviv1/ZyDV1VFeVTfMomTL9Sovh5Q8EIU/LNEueEkUP+evUf57Uf7rLE1arULQ0noxp2Eh2X+hIaE5dIE+IdpzrnwrE2v+OcK/CNXP4WetCtnVM4qFbvEpng/5PPA8US6ESwE4HzDadQaSLYzMicCAUB6A2zNOz9xidJx0Mc1CunmC1cQOq503rF79ZfXXysokV/6/ereZlfkvq7+vWL3aYbUzyWqihVVLrJGTMdbrDaeXnpjgNAGkWhhZ0gCX64yuuwAoZ1QKAJ73+dzzOIFCPoU4fYnNPM4M+czlfeBZyLcyMWfivJ1MOnD+YR7DuKDzOItRp4sAPRx6oGXlV/V9rYS20WuqW4+G1k7Vj1X2sMoJDvSquq6q61VecLBr+uxHvWr0H6bSXXEZ/WKbBtZf/jKqwPjr5fpgU5wftAQAVlA4IHQDAAAwFQCdASp4AHgAPm00l0gkIyIhJ5ZoqIANiWNuLl88TGh3mV+H8QHgZFusVerjb+87kLZ8g314m0yK5uj/TB6n/4RvMxOGw4XwEf2M2eUOogHDPqIeofdscQle2xHBScpYAnKC3foHZMYgyv8d6Mt9+MvXwEh09LhdwNt29CC+GWLJCvszeBVujTSI/W2vxPWXLCHkdDpIuEABPgpEqa9cifBQKE63IJZu+sy+8s7UHdiAAP78EvLd36LRDatySK6wgJfLbHpxtOIjShhP3rLR+eOtIC7iJ/X22s/FR/WpGgsElJu3SOL5LwQGEZoaqe+4pyY+xe6M2/qvnrH2paXOF+yZDz6Cf+l0zYyu93HRD+XZv61+ZgA30qSTClnC5wNLX/j1ZdJXUr9nDVTgo8FF8zA4ftjJHSC7dw/ZlnJ23jGy4AKWjTdMypxxg4miKSHXt51YSNZcK7Iz3jKQPt3QTKy9wO0AxvlUrdjHgdC1IWARU43SkRRGAerRZFV9M5OuxB9FoJ88JrFPaOaKcWyWtG5loQJiITpR3E/8nCynTuYvAmMttZeeJ+zRIZrWCt7vuyrT8siQVuaLwWBiO7HiQiEP/y6ED1JuvWS+9HAF06psmo9SBtG95/03QHiZyr9d4Mov0IOmIwy9MkoxoOZk9b/kxYM3u2ebv8ftXZW3gVfup7GZoNQyf6lxlnR4ePE6m7IFXkFxwjedjX6/eUhf8Pkj5X2mNsTUtUE8bsUJWya1D3yFKZV5ekaKD9MzCwhgn9AIaN3B8ojzhEvW9ZnCSkJXbyfI+hGnhvWQY7LiGDj3NwQ1hmUmhdQ1cD772qpdOkJYeOljEgEZtOorex2kt6VfWyhAGzCEWNqPGwZl28PdBPaSq4fVNWq+WM7C5r1Ad7lpgmpW8+VTvP28YWCc1vJwvwtVdC4iRwjTGt8Lhh8Ibm+3llofVO99qkD750kENn8VeebmQNoMWQWBmGBwZYF+OZwqZstfUWVvPiLT9eSixv7Cu8ImQri5bATNcZA2EznLI+mIM/uMjOxs/VeOpkLlNPzBM/QXzy+/KOwqlZPbLhLiemCavxMBGWYw2RlIeYOFyQw0MjBweixfDsKRwOwGjgMXPPPCC+rvLotlxGZo/r8z/ZAy+QK+7ZQeDEAVS+3xyTRwKEh5AA8TBp1iZoAAAA==" alt="FUSE" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"><img src="data:image/webp;base64,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" alt="NERVE" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"><img src="data:image/webp;base64,UklGRhIFAABXRUJQVlA4WAoAAAAQAAAAdwAAdwAAQUxQSHkAAAANgGrbtupmh5kTy8zMFi25fAF6Kqhq/t9aXLaJiAnQF5rTtXIxF/E4xJperD8F3NjWRJy+Twt5uxFy5EXMxWcxjx7E3DyLOf0kZtuHoE+CroypHgU9jFAdBV1KUM0FbVhTpS1UPVF3sLJYUSw/VgDLgXXz/83//5kHAFZQOCByBAAAEBkAnQEqeAB4AD5tMJVHpCKiISgYCgCADYllANbQ8mJEXGvz6gPyrvEf2A9QHn/+jP/YelB1AG8u+UZeBuMfoD9FyUbh/r4HZvVYzb0M5zasqaf5amdkPsUvi/sobmWEo+kLBasZjwn7o5M7m/kgsYeeVz8aUcR/cGztLOIhX613ET2SnUHeLGyazNY6tekXEL7CKaWVezoRqatrL2RgWHqlqP8hIVehWW9349/qvb+bweLM24bdnsWrpPKT3ht8kO0CIfvYzD7FL5PzMkZJrwAA/vyGOnkPE6XI0U/yxyCiFGyXWq/pdOX204Q3T9U9sgtXAFbbJz6wAB2JanN7vFuxFQ3AAddomhWa82DIyESDzqnLyexrm+loDetamETIG9zFrVOo1YimSluWo/P2mxJAUIbTCGESg2rcue+MR5SIoMooQKxfIGR+si9ssY5ZldwulrVVp/orFmXYVonvFJaCC0WUQEYGNCDr6z2g7AyvzJ2+NNIoE0ziOP5f3+1WGp1fXS2x/X/z9X/LXcJoWMPQRkZLqiT9Kf2N1OIA3BiAwhRVqLsc6ci/88deVTL1zO8egeZvkxQcO/9PsryEL0Wo9ALAJEkIDApR0VO6FppaSv9Ylg20mCf5kqEur+1GE4MrU+3q84RSRuP72MuBVeLxSD7dnvVMKYXXZ0P73u7J+wMBjnftRYKmEmBbDcOzmFiteEQRIPf0YRhVSuPlLaKjddmfQSwuNtf0qpKrcn3YFOIV7aiC4l8ByH65JBmUDRAuPKf9/dv59lMIR/28ry0YzjyAPEsdNLaeY/NiqkagBFi8URK2/GyqSvLCgbp3zKUWsUFJB8SSKihFAw5Kw3Y8eZy3PYhb8snp1dIZhpXp9+FK2iyXIf9lB+/EWpWk3v013D0XnBvflClltuTERzsj9zMFTsJicpMk2InUTNadPJs8Zs2AeYfTPVQOGZ4A7VWtevNnGb3T1M5mZHXRxqKmkpnc9gI0B4Iy2CctmfHKceSf8F6/1uWolbJRlLN2dNurQ4Dh10o3q+G0atn9TFZcT46CASBt2Na4gD0w7QxLOr3nZ7gdWS9+3HfGemLFoLb/OOsmRwSwYj3UySViweXr6Nry7q9KUWoXBtDH2j7jbMDZTgpPYmglg63IW/dI8v0Ofg9gExRbemirTN6X3ODl4RvPS9JgMDqb+JafiHvGSNf+ZQ87qlm+rbrvjtey+6P5SLURoT4skubgmQvHoSK2EUPOgb0dOPJnvmovgi92msHw/hhJzQprY5NZYLwxDoj+zWUfJFYvE4I9VcNdPauXaWUBN50tLKxgkHlEpk14Rvl2+HUbdELjd0eG3Vxy6IbBjtuizVleR8nzTCD1VKIAlFe8cm/KtwxFeB4FCbPIcMkrSwJkOtowGKPV5TUEs2ZT9Kbtr++PQQPJSUV455JGw3X/WgKuwa8lXnuretkoo6xpkCR0kKF+3KiI6qjodVC9GvKEACBVqwAe7AYq7lk6nz55MAgkF3FAC6eB1gAAAA==" alt="PRISM" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"></div>
+        <span class="pkg-cta">ENTER THE ARCADE &rarr;</span>
+      </a>
+      <a class="ofa-card p" href="https://reachfi.network/pvp/">
+        <div class="mono" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--onair);margin-bottom:16px;display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--onair);box-shadow:0 0 10px var(--onair);display:inline-block;animation:blip 1.2s steps(1) infinite;"></span>CH.08 &middot; PVP ARENA &middot; LIVE</div>
+        <div class="exp" style="font-size:26px;font-weight:800;letter-spacing:.04em;margin-bottom:14px;color:var(--text);">THE FLOOR<span style="color:var(--onair)">.</span></div>
+        <p style="color:var(--dim);font-size:15px;line-height:1.65;">Live duels and open tables. Every cabinet INSERT COIN runs, head to head on the same verified rails.</p>
+        <div style="display:flex;gap:8px;margin:18px 0 22px;"><img src="data:image/webp;base64,UklGRn4MAABXRUJQVlA4WAoAAAAQAAAAdwAAdwAAQUxQSGwCAAABkCRt/5s2v9EN3HQDhhvIirAaxWKQNnCO1C24wB3cl+mJSKUjXJbs03tlhdyLnPotqJ7Rf5cSERNAA1vnC/DhwnmLzjYx/x6+/X4+MTyrCeBVtWaKIZ8VzVr1FYCmNRx+ATi1o/qknHd8Ny9P6lH7FFjghyC48K4agewX+PSXbMC46sEVBuHSLlzJLP6Cj/8qmlIbbprri7sB3E9lPPi8l0ndB25w/cwAq6NlMLAyugrM9CG0sTbmgInO2BraQg9+F6WRBhjZGClhl++2CDdZATMrSReLXSx4UzNg6MyUB6ujiVvmPkv2zVtoElHi55HhgKmOcfQzQZSDHQRjgzZyRC3Es6zJxtEi6/ip1mJNS3tybF1BVQJzpSquFFCT2SPXUABMmz15EwDEDfZsiB0hhz1O6L///vvvTwfiBns2xA4zz568CRRQk9kj11C4gqrEHqmKK9bxE63Fmpb25NiiFuJZ1mTjaBHlYAdZE7SRI0r8PDIctjjG0c8EETVxy9xnyb55C00iIgve1AxLZkIerA5ahJussKOSdLFIXfldlEYarGiMlLDLdyOhjbUxhw3O2BraAvWeAVZHKyyojK4CM9QndwO4n8p4fudlUveBG1w/xKVdtCWz+MvPfhVNqQ03zdGAggvvqhHIfvGrL9mAcdWDK9Dg/AJwakd1Uck3eq93bnTd7HdrmJv9bnSud230zCtiOGqfAgs8DdVqAnhVrZvnZFmWFUVVVU3TdT0ciUSi0VhsutPoHe9u9JzujMWi0WgkEg7ruqapqqooiizLklmvvgLQtGjoifn38O338wk6W+t8wY8K5y0aGFZQOCDsCQAAsCsAnQEqeAB4AD5tMJRHpCKiI6iTy7iADYlkAM5s/Ern0fnF2J+88NNU/l/Pwf6H1beYBzufNH5vHpf/xPpAdR56EHlzezD9x3tYU1H9BkKf7niF4AXq7eoh1so9WaoAeKFn1eqv2b+Af+b/2jrMeir+wAnPE2kig/ax1gc61j1WM6McO0hp8KzNXW/d3s66nWgreDdFtD75SYYEKlmGfgkIGHAGcS61OPSB7a0ZL1e93Z6y17CObpDkMcKkWsqbbM9iuirwW/zvU1uAdLhf8pLlYRyg/23WIjgTaADpZN7Jv13kev3/DS51P4VokMWr9zmE8xipq0zJNb6WRMt/17+ViskiRdJnopo3rhrJQMazu2pwvGboa48DllhHXokqMZvdOwLfI+5op/WXZ03U45uvNSAHVsgPVFPNT6vQ2oAT5EuEgopADFft1TihvbcfGM6lIlal5xZrUj/71vr32Gj3lU6VAAD+/KtcmNiyk+69UtPsS/38OlSFqyiXPfYNj4YeFz7aIZvwEs468KaBOLJZe/u5HVad+00LAW8znRAcrA4811XDZQMKA86jWuxiUfpzgFWx2dsTaWHThPa91sstK/qkQ8uihDWVoP2H88ZDK6T9VDZKKmzuEhwAAKetDggvLHEQzYsYAU/O6/t+syu7bJ8zDE/QidsKtuevo/S46TB+Akd4zNSesGVJ+4KkHPtP9CPBoi/5TxF0wwsqdo0Hffrz73/JH2cfQIReJav9h4Nf+99ufH8zY0/NdD184NgM8BybrBQu/jnrthNl1BEAZi+4NXfyaYOh/PndIhq1gofIdqiuK4Cep5Rff41tv074cr67tqTXvAGmYMZVZpai05lnNHZzNz9NPLw74/f40z5rAkgtVaR+4xHXar0OQR0MAFglsM2w1eIj8cfPW/mzIKhXSzD1SAkeZZmkF/rgxNtLz8YCvExTCBL5d+YnLWGKmB+o/eBM/mx34s3A0ViaJR2FvoX/d1XnjgxaNxkUSh67PN4KkALw/pYCCYQtLLUdl7bHjaOvn52HV7W+gb5PcR3xygJ8OyZzFo7/gqduD780hFZAajaR4xqj+oGpvFvc6e2EeE8qTONr4GHlIycv4BkVZKps+lhs4FkFVbc5KuNAFxA8+aHgsrGZd4TMovRVqDy2rpF8HsifedOYigpwqbQ4+K8aeMtVYS7j+4YplI/Rbozap6jgAY+SsTSIo402w3JMKqd3svh16vyuoWsRSOr30veVBD0r6ONiyE5OmfcMwHE/6rxuCo2KL/Fm1JS9iYdiHKOdCumFUrdUbzBeh5RQXvogMfIB2iCpbzvL4NrdS7Ylxt/noaJGt/u3gnXVMoG0t+eQkVWbAieGcmBEfwrwDaSSPbKSE5ua2y8qJqfONRv2O3pUDffeZntqsou8f+r4pcYt4ZYlKY15n1s5DV9U+4Wm9J2aVHB0dxRp7wKhkBXLgz5b6TBZExS+fjTZ14HVCbXs/N+YP//vyerjsoEmI9SdnZFQ/oGI+pgyHXH39YP+kVBG0CerSGyibU76b5zdesqybS9+PPyqKd7ozy9yjXoH0uk05MI2xZsjlGO7uDAOU33U8YgQuQElGov/EmTB/70OBl+nuZyVRtDxZimrXsuE0KHofBa4zva0b4sFPpYHYLofm4hkQf3cPZojm/sp3HmVq25EdWojfqRmMZ8kcC4DSfMyCiwvc2P+ar2+sMzkGwj1qWWaDcwt/7Z5C+crkTIiUsWHng8TZB3HYEu29hzZIinS+GwBQi+2XePJPMORY9Kkxx0M9bilQtaf0TXlhEW9oGMy8Tos8tI0nsfBHqGuItzUCJafgNGLvkqvcx3qX8MTSPqLfeXNq3LkNGYc1/3AuULUKgeLixjQeJH2uU/F3G6k2hFCToVHNOXMO498Y2M8uz8fU++LCKIhFIkOj4+rLds/mtE0jQ8sKQPuZKtonyga7q2b2mq+j5VNsjsRKVCylhwxp/SmQrw9Mv/P/hQ2axL1s4xnFch0vzrPbf0YqNIjh9wZ3nFZDah3A7tB9VJFZPrxLKydtqlqCbKoIf77CM+O9afZ3v5oLWTdcmN7YAxCkkBBoWwVXQoCLGUchgx0NmjfPouBo1+ee/wjYxwaleJf5XH0YqCNnxEo68oQmAum9NKCdIIdUjqjZBSleoy+ib71lkDczHQgedbL1RCepz5vW39dRjcTdM88GKlTWNtN/pFQP2kt4EMM4OqYeZ1nb1ohORssCvTln9NNYGQr4pAtD/lNnsVH+8y/MzQbTRVGGUgIsTylbAGSqFjKNOOVMelHBoQ0KjCYejHHiMTMxLMiH8xfhQ0IfTgy3vkRrtHY+sFcNWcQAl7odHn/bgAqORBA6++7BviXb2Kn2BgQv3Q1EvEaFEYbIUdg9NEyqTSyf1Q4JRV4wvd6PZd74o4dsTsCr88PaG+IgxT++cTdrfFg0YOdM8grkpBKwNB0tbXt26IhVcOr9RDA4UYWR94urFX0wrVRS2peqPps4UDOfxORvZhNytLY0v3+DLr7Dq52LWgpdWAtXLgepgZ15eBx05WIC957/5rEF7lnSjVk+13GR4YgVaQL98uUhigAdRcN1bM5FINfAeaR9Xm8/CL5w0i0Fw+QSKG0jAlABbkQMZo5qY2fgQ5gOVaauAdsymb3jndkQIbRJZ26VKNq5E7/bTE4uozDmG27t0OgVlEQKUfupvPD0aRj84kHMf/pn4ZL7jVQTKwlChqUvUbCAzJCwG7YZG6/47ZBfsBvovLRv78DiLzZTeceGNBbXicghWw//pks+Ho+Bav/UeuY5yWfNR8XumJch3ecn1t7H2LiqzFD1IJM2gyC88OlcaKmyr9dUe1/5NmpIpsiMJsVtyiH9IFkxDHtB9m7Iku/IHO5MXO08DzrrUJuNjnuZr3sifV1MTUvxmoJ0juxNT2gC797oiQOOxnTr7RbYdl14AQbaV7cliH2BhGWNtm+ChTzFSowelJsFj650bBpCtpJJqSng15OGv68xA/zZg24GANfVTWy4W0ysQt3NDDV3JWZo9E9A1b2KVWR6C0E7PGG8NZ/WatecRaq3PHfHxZTger8+80ZX4U+pqTDc4czEfSBOz5cQ5P+IWubM3VHuD6aLDlHCzGn+WW6HIGwAtT1P8n8gJ/7NuSW5zruVAAduw9SFWPRQua75/Qjrn9jljaKcyxtlv9RJl6bKnMNfZKGKlgx9YZuROBMA50Ct+vZGOl3rDbEogCN4fIG4uYrWhocsBefrvLHKWx2lRiB7KWqgeCUJoOY5Xizolg72OhC/9f//P9YBqD3/1cAjS3NjkXj/3MS5gPsWtDdVOP97da0wX59hnnonRNJBDvyQeKnLdX0zDKtMgX/vhtx48Mw7FDc+D3gAAA=" alt="STAK" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"><img src="data:image/webp;base64,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" alt="NIL" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"><img src="data:image/webp;base64,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" alt="ROOK" style="width:40px;height:40px;border-radius:9px;box-shadow:0 4px 12px rgba(0,0,0,.5);"></div>
+        <span class="pkg-cta">ENTER THE ARENA &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- THE STUDIO -->
+<section class="section" id="studio">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="tag">06 / The Studio</div>
+      <h2>The network also <span class="air">builds.</span></h2>
+      <p class="section-lede">Every cabinet on the floor, every app in the store queue, every page on this site was built in-house. REACHFI STUDIOS is the production wing, and it takes commissions: apps shipped to both stores, custom games on verified rails, launch pages in 48 hours, or the full play where the network carries the launch after the studio builds it.</p>
+    </div>
+    <style>
+      .studio-card{display:block;background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:34px 30px;transition:border-color .2s,transform .2s;color:var(--text);text-decoration:none;}
+      .studio-card:hover{border-color:var(--cyan);transform:translateY(-3px);}
+      .studio-chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px;}
+      .studio-chips span{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);border:1px solid var(--border-bright);border-radius:4px;padding:5px 9px;}
+    </style>
+    <div class="reveal">
+      <a class="studio-card" href="/studio/">
+        <div class="mono" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;">ST.01 &middot; REACHFI STUDIOS</div>
+        <div class="exp" style="font-size:clamp(22px,3.4vw,34px);font-weight:800;line-height:1.15;margin-bottom:12px;">The network builds its own shows.<br>It can build yours.</div>
+        <p style="color:var(--dim);font-size:15px;line-height:1.65;max-width:640px;">Commissions run on the same pipeline that ships our own titles: fixed quote on scope, prepaid, built between network releases, and you own the keys from day one.</p>
+        <div class="studio-chips">
+          <span>STAK &middot; Live on the App Store</span>
+          <span>PULSE + FUSE &middot; In Apple review</span>
+          <span>8 games built in-house</span>
+          <span>NOVEX &middot; DeFi-grade builds</span>
+        </div>
+        <div class="mono" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text);">Enter the studio <span style="color:var(--cyan)">&rarr;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="tag">07 / Questions</div>
+      <h2>Frequently <span class="air">asked.</span></h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">What does "owned network" actually mean? <span class="pm">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">It means we operate these six accounts directly. When you book a campaign, we're not calling around to negotiate with influencers. We publish to channels we control, on our schedule. That's why we can guarantee placement and hand you real analytics.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Why is that better than a normal KOL agency? <span class="pm">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Three reasons: price (no middleman markup), speed (no negotiation lag), and trust (first-party analytics you can verify, not screenshots). A broker rents you reach and disappears. We own the reach, so we're accountable for it.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What kind of reach can I actually expect? <span class="pm">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">The network spans 1M+ followers across six channels, from a 668K-follower flagship to focused trading, DeFi, and NFT audiences. A 30-deep amplifier crew rides every broadcast on top, so real impressions regularly outrun raw follower counts. Exact reach depends on which channels your campaign uses; we scope projected numbers in the channel-map step and report actuals after</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is the amplifier crew? <span class="pm">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">A standing crew of 30+ smaller accounts that subscribe to the network and show up under every broadcast: replies, reposts, quote chains. It is how a post travels well past its follower count. Crew activity lands in the impression numbers we report, and those come straight from accounts we own.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you guarantee price action? <span class="pm">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">No, and anyone who does is lying or about to get sued. We guarantee reach, placement, and verified analytics. What the market does with the attention is up to your project.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Which channel is right for my project? <span class="pm">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Depends on your goal. Need broad awareness? The big culture channels. Need to reach people who actually trade and ape? The DeFi and trading channels. Most campaigns blend both: mass reach to get seen, DeFi reach to get bought. We map it in step two.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I book? <span class="pm">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">DM us. Tell us your project and timeline, and we'll come back with a channel map and a quote. Time-sensitive launch? Say so. We can move fast when the slot's open.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing" id="book">
+  <div class="onair-big">ON AIR IN 3… 2… 1…</div>
+  <h2>Go <span class="air">on air.</span></h2>
+  <p>Tell us about your project. We'll map it across the network and put it in front of the audience that matters: fast, owned, and measured.</p>
+  <!-- PLUG: Telegram booking link -->
+  <a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book a campaign <span class="arr">→</span></a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-mark exp">REACH<span class="air">/</span>FI</div>
+        <p>Crypto's owned-and-operated broadcast network. Six channels. 1M+ reach. One network.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Network</h4>
+        <ul>
+          <li><a href="#network">The Channels</a></li>
+          <li><a href="#why">Why Owned</a></li>
+          <li><a href="/studio/">The Studio</a></li>
+          <li><a href="#packages">Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Book</h4>
+        <ul>
+          <!-- PLUG: real contact links -->
+          <li><a href="https://t.me/Novex_Clutch" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+          <li><a href="#packages">Packages</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 REACHFI · ALL CHANNELS OWNED &amp; OPERATED</div>
+      <div>NOT FINANCIAL ADVICE · FOR ENTERTAINMENT</div>
+    </div>
+    <div class="footer-mega exp">REACHFI</div>
+  </div>
+</footer>
+
+<script>
+// LOADER
+window.addEventListener('load', () => {
+  setTimeout(()=>document.getElementById('loader').classList.add('gone'), 1700);
+});
+// VU meter build
+const vu = document.getElementById('vu');
+if (vu){
+  for (let i=0;i<28;i++){
+    const b=document.createElement('i');
+    b.style.animationDelay=(Math.random()*1.4)+'s';
+    b.style.animationDuration=(0.8+Math.random()*1.1)+'s';
+    vu.appendChild(b);
+  }
+}
+// NAV scroll
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>{ if(scrollY>50)nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); });
+// FAQ
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
+// GSAP
+if (typeof gsap!=='undefined' && typeof ScrollTrigger!=='undefined'){
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray('.reveal').forEach(el=>{
+    gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}});
+  });
+  // counters
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=parseFloat(el.dataset.count); const suffix=el.dataset.suffix||'';
+    const obj={v:0}; const decimals = (target % 1 !== 0) ? 1 : 0;
+    ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter:()=>{
+      gsap.to(obj,{v:target,duration:1.6,ease:'power2.out',onUpdate:()=>{
+        el.textContent = obj.v.toFixed(decimals)+suffix;
+      }});
+    }});
+  });
+  // hero entrance
+  gsap.from('.hero-eyebrow,.hero h1,.hero-sub,.hero-ctas,.hero-vu',{opacity:0,y:30,duration:.8,ease:'power3.out',stagger:.12,delay:1.9});
+}
+</script>
+
+</body>
+</html>
