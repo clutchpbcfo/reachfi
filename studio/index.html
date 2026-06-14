@@ -7,7 +7,7 @@
 <meta name="description" content="The network builds its own shows. It can build yours. Apps shipped to the App Store and Google Play, custom games on verified rails, launch pages in 48 hours. Fixed quotes, prepaid, you own the keys.">
 <link rel="canonical" href="https://reachfi.network/studio/">
 <meta name="theme-color" content="#0a0a0b">
-<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.png">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -537,8 +537,48 @@ a.receipt .go{color:var(--text);}
 .step p{color:var(--dim);font-size:14px;line-height:1.65;margin:0;}
 .fineprint{margin-top:26px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;line-height:2;color:var(--faint);text-transform:uppercase;text-align:center;}
 </style>
+
+<style>
+/* ===== REACHFI global family bar (injected, scoped) ===== */
+.rfnav{position:sticky;top:0;z-index:9999;background:rgba(10,10,11,.82);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid rgba(255,255,255,.09);font-family:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif}
+.rfnav *{box-sizing:border-box}
+.rfnav__in{max-width:1080px;margin:0 auto;height:46px;display:flex;align-items:center;gap:14px;padding:0 20px}
+.rfnav__brand{font-weight:800;font-size:15px;letter-spacing:.01em;color:#f5f5f2;text-decoration:none;white-space:nowrap;flex:none;display:inline-flex;align-items:center;gap:8px;text-transform:none}
+.rfnav__brand b{color:#ffb000;font-weight:800}
+.rfnav__sig{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.rfnav__sig i{width:2px;background:#ff3b35;border-radius:1px;display:block;animation:rfeq 1.1s ease-in-out infinite}
+.rfnav__sig i:nth-child(1){height:4px;animation-delay:0s}
+.rfnav__sig i:nth-child(2){height:10px;animation-delay:.15s}
+.rfnav__sig i:nth-child(3){height:6px;animation-delay:.3s}
+.rfnav__sig i:nth-child(4){height:12px;animation-delay:.45s}
+@keyframes rfeq{0%,100%{transform:scaleY(.5);opacity:.6}50%{transform:scaleY(1);opacity:1}}
+.rfnav__links{display:flex;align-items:center;gap:20px;margin-left:4px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;-ms-overflow-style:none}
+.rfnav__links::-webkit-scrollbar{display:none}
+.rfnav__links a{color:#9a9aa2;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;white-space:nowrap;transition:color .18s;padding:2px 0}
+.rfnav__links a:hover{color:#f5f5f2}
+.rfnav__links a.on{color:#f5f5f2}
+.rfnav__cta{flex:none;display:inline-flex;align-items:center;gap:7px;color:#f5f5f2;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;text-transform:none}
+.rfnav__cta .d{width:7px;height:7px;border-radius:50%;background:#ff3b35;box-shadow:0 0 8px #ff3b35;animation:rfpulse 1.6s infinite}
+@keyframes rfpulse{0%,100%{opacity:1}50%{opacity:.35}}
+/* push the page's own pinned nav below the family bar */
+nav{top:46px !important}
+.nav{top:46px !important}
+</style>
 </head>
 <body>
+
+<div class="rfnav"><div class="rfnav__in">
+  <a class="rfnav__brand" href="/"><span class="rfnav__sig"><i></i><i></i><i></i><i></i></span>REACH<b>FI</b></a>
+  <div class="rfnav__links">
+    <a href="/#network" class="">Network</a>
+    <a href="/#apps" class="">Apps</a>
+    <a href="/arcade/" class="">Arcade</a>
+    <a href="/studio/" class="on">Studios</a>
+    <a href="https://novex.finance" target="_blank" rel="noopener" class="">Novex</a>
+  </div>
+  <a class="rfnav__cta" href="https://t.me/Novex_Clutch" target="_blank" rel="noopener"><span class="d"></span>Book</a>
+</div></div>
+
 
 <!-- NAV -->
 <nav class="nav" id="nav">
