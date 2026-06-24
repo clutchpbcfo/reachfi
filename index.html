@@ -125,20 +125,39 @@ footer{border-top:1px solid var(--line);padding:48px 0 40px;margin-top:20px}
 .fcol a:hover{opacity:1;color:var(--amber)}
 .fnote{margin-top:36px;color:#55556f;font-size:.78rem;letter-spacing:.04em}
 .sep{color:#33334d}
+
+/* ===== REACHFI unified header (rfh) ===== */
+.rfh{position:sticky;top:0;z-index:9999;background:rgba(8,8,15,.86);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid #23233f;font-family:'Exo 2','Inter',system-ui,-apple-system,'Segoe UI',sans-serif}
+.rfh *{box-sizing:border-box}
+.rfh__in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:18px;height:62px;padding:0 24px}
+.rfh__brand{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:1.05rem;letter-spacing:.02em;color:#f4f4fb;text-decoration:none;white-space:nowrap;flex:none}
+.rfh__brand b{color:#ffb000}
+.rfh__sig{display:inline-flex;gap:2px;align-items:flex-end;height:15px}
+.rfh__sig i{width:2.5px;background:#ff3b35;border-radius:1px;display:block;animation:rfheq 1.1s ease-in-out infinite}
+.rfh__sig i:nth-child(1){height:5px}.rfh__sig i:nth-child(2){height:13px;animation-delay:.15s}.rfh__sig i:nth-child(3){height:8px;animation-delay:.3s}.rfh__sig i:nth-child(4){height:15px;animation-delay:.45s}
+@keyframes rfheq{0%,100%{transform:scaleY(.5);opacity:.65}50%{transform:scaleY(1);opacity:1}}
+.rfh__links{display:flex;gap:24px;margin-left:auto;font-size:.86rem;font-weight:600}
+.rfh__links a{color:#8e8eb0;text-decoration:none;white-space:nowrap;transition:color .18s}
+.rfh__links a:hover,.rfh__links a.on{color:#f4f4fb}
+.rfh__cta{flex:none;font-size:.84rem;font-weight:800;letter-spacing:.04em;padding:9px 16px;border-radius:10px;background:linear-gradient(135deg,#9d83ff,#8B6CFF);color:#0c0618;text-decoration:none;white-space:nowrap;box-shadow:0 6px 22px rgba(139,108,255,.4)}
+@media(max-width:760px){.rfh__links{display:none}}
+nav{top:62px !important}
+.nav{top:62px !important}
+
 </style>
 </head>
 <body>
 
-<nav><div class="wrap">
-  <a class="brand" href="#top"><span class="sig"><i></i><i></i><i></i><i></i></span>REACH<b>FI</b></a>
-  <div class="navlinks">
-    <a href="#games">Games</a>
-    <a href="https://reachfi.network/arcade/">Arcade</a>
-    <a href="#arena">Arena</a>
-    <a href="https://reachfi.network/studio/">Studio</a>
+<div class="rfh"><div class="rfh__in">
+  <a class="rfh__brand" href="/"><span class="rfh__sig"><i></i><i></i><i></i><i></i></span>REACH<b>FI</b></a>
+  <div class="rfh__links">
+    <a href="/#games">Games</a>
+    <a href="/arcade/">Arcade</a>
+    <a href="/#arena">Arena</a>
+    <a href="/studio/">Studio</a>
   </div>
-  <a class="navcta" href="https://reachfi.network/arcade/">Play free →</a>
-</div></nav>
+  <a class="rfh__cta" href="/arcade/">Play free →</a>
+</div></div>
 
 <header id="top">
   <div class="halo"></div>
